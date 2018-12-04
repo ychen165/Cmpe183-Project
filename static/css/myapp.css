@@ -1,0 +1,87 @@
+/* line 1, ../sass/_main.scss */
+.colorful {
+  color: #bb8833;
+}
+
+/* line 5, ../sass/_main.scss */
+div.main_content {
+  padding: 16px;
+}
+/* line 8, ../sass/_main.scss */
+div.main_content div.form_row {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+/* line 13, ../sass/_main.scss */
+div.main_content div.post_div {
+  margin: 4px;
+  border: 1px black solid;
+  background-color: #eeeeee;
+  padding: 4px;
+}
+/* line 18, ../sass/_main.scss */
+div.main_content div.post_div .post_title {
+  font-size: 120%;
+}
+/* line 24, ../sass/_main.scss */
+div.main_content i.changed {
+  color: #777777;
+}
+/* line 29, ../sass/_main.scss */
+div.main_content span.likers_list {
+  color: #7777cc;
+}
+
+div.main_content div.reply {
+  padding: 4px;
+  border: 1px black solid;
+}
+
+
+
+.nav-logo {
+  font-family: SourceHanSansSC-Bold;
+  font-size: 32px;
+  color: #58C5E4;
+  letter-spacing: 2px;
+  padding-left: 3%;
+}
+
+.nav-logo-sub {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 17px;
+  color: #707070;
+  letter-spacing: 1.31px;
+  
+}
+
+.nav-button {
+  font-family: SourceHanSansSC-Regular;
+font-size: 18px;
+color: #707070;
+letter-spacing: 1.38px;
+padding-right: 30px;
+}
+
+.nav-login {
+  border: 2px solid #58C5E4;
+  border-radius: 18px;
+  height: 50px;
+  width: 110px;
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+.nav-login-text {
+  font-family: SourceHanSansSC-Regular;
+font-size: 16px;
+color: #707070;
+letter-spacing: 1.38px;
+
+}
+
+.nav-div {
+  float: right;
+  padding-top: 1%;
+}
