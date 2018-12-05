@@ -31,6 +31,12 @@ db.define_table('post',
                 )
 
 
+# Thumbs
+db.define_table('thumb',
+                Field('user_email'), # The user who thumbed, easier to just write the email here.
+                Field('post_id', 'reference post'), # The thumbed post
+                Field('thumb_state'), # This can be 'u' for up or 'd' for down, or None for... None.
+                )
 
 #Replies
 db.define_table('reply',
