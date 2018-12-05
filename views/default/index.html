@@ -81,7 +81,7 @@
           <div class="attributes">
 
             <!-- Code for Thumbs. -->
-            <div v-if="is_logged_in" class="thumbs">
+<!--             <div v-if="is_logged_in" class="thumbs">
               <span v-if="is_logged_in" class="thumb_up_class"
                     v-on:mouseover="thumb_up_mouseover(post._idx)"
                     v-on:mouseout="thumb_up_mouseout(post._idx)"
@@ -99,7 +99,7 @@
               </span>
 
               <span v-if="is_logged_in" class="thumb_counts" v-text="get_thumb_count(post._idx)"></span>
-            </div>
+            </div> -->
 
             <div class="post_buttons">
                 <span v-if="cur_user_email == post.post_author" class="edit_buttons">
