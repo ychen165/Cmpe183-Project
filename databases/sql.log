@@ -101,3 +101,14 @@ CREATE TABLE "web2py_session_hw4"(
     "session_data" BLOB
 );
 success!
+timestamp: 2018-12-04T18:07:33.299165
+CREATE TABLE "web2py_session_startup"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
