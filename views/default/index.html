@@ -74,6 +74,10 @@
         <div class="third" v-for="post in post_list">
 
           <div class="entry">
+            <!-- code to upload files, with control button -->
+            <div id="uploader_div" style="display:none">
+              Upload an image file: <input id="file_input" type="file" accept="image/jepg">
+            </div>
             <div class="post_title">${post.post_title}</div>
             <div class="post_content">
               <span v-if="!post.editing">
@@ -84,7 +88,7 @@
               </span>
          
           </div>
-        </div>
+        </div> <!-- end of entry -->
 
           <div class="attributes">
 
