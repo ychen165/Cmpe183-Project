@@ -8,21 +8,24 @@ div.main_content {
   div.form_row {
     margin-top: 8px;
     margin-bottom: 8px;
+
   }
 
   div.post_div {
-    margin: 4px;
+    margin: 30px;
     border: 1px black solid;
     background-color: $clrLight;
     padding: 4px;
     .post_title {
       font-size: 120%;
+
     }
 
   }
 
   i.changed {
     color: $clrUnconfirmed;
+
   }
 
 
@@ -35,5 +38,55 @@ div.main_content {
     border: medium solid black;
   }
 
+  i.novel {
+    color: $babyblue;
 
+  }
+
+}
+.nav-logo {
+  font-family: SourceHanSansSC-Bold;
+  font-size: 32px;
+  color: #58C5E4;
+  letter-spacing: 2px;
+  padding-left: 3%;
+}
+
+.nav-logo-sub {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 17px;
+  color: #707070;
+  letter-spacing: 1.31px;
+  
+}
+
+.nav-button {
+  font-family: SourceHanSansSC-Regular;
+font-size: 18px;
+color: #707070;
+letter-spacing: 1.38px;
+padding-right: 30px;
+}
+
+.nav-login {
+  border: 2px solid #58C5E4;
+  border-radius: 18px;
+  height: 50px;
+  width: 110px;
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+.nav-login-text {
+  font-family: SourceHanSansSC-Regular;
+font-size: 16px;
+color: #707070;
+letter-spacing: 1.38px;
+
+}
+
+.nav-div {
+  float: right;
+  padding-top: 1%;
 }

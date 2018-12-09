@@ -12,33 +12,36 @@ div.main_content div.form_row {
   margin-top: 8px;
   margin-bottom: 8px;
 }
-/* line 13, ../sass/_main.scss */
+/* line 14, ../sass/_main.scss */
 div.main_content div.post_div {
-  margin: 4px;
+  margin: 30px;
   border: 1px black solid;
   background-color: #eeeeee;
   padding: 4px;
 }
-/* line 18, ../sass/_main.scss */
+/* line 19, ../sass/_main.scss */
 div.main_content div.post_div .post_title {
   font-size: 120%;
 }
-/* line 24, ../sass/_main.scss */
+/* line 26, ../sass/_main.scss */
 div.main_content i.changed {
   color: #777777;
 }
-/* line 29, ../sass/_main.scss */
+/* line 32, ../sass/_main.scss */
 div.main_content span.likers_list {
   color: #7777cc;
 }
-
+/* line 36, ../sass/_main.scss */
 div.main_content div.reply {
   padding: 4px;
-  border: 1px black solid;
+  border: medium solid black;
+}
+/* line 41, ../sass/_main.scss */
+div.main_content i.novel {
+  color: #58C5E4;
 }
 
-
-
+/* line 47, ../sass/_main.scss */
 .nav-logo {
   font-family: SourceHanSansSC-Bold;
   font-size: 32px;
@@ -47,22 +50,24 @@ div.main_content div.reply {
   padding-left: 3%;
 }
 
+/* line 55, ../sass/_main.scss */
 .nav-logo-sub {
   font-family: SourceHanSansSC-Regular;
   font-size: 17px;
   color: #707070;
   letter-spacing: 1.31px;
-  
 }
 
+/* line 63, ../sass/_main.scss */
 .nav-button {
   font-family: SourceHanSansSC-Regular;
-font-size: 18px;
-color: #707070;
-letter-spacing: 1.38px;
-padding-right: 30px;
+  font-size: 18px;
+  color: #707070;
+  letter-spacing: 1.38px;
+  padding-right: 30px;
 }
 
+/* line 71, ../sass/_main.scss */
 .nav-login {
   border: 2px solid #58C5E4;
   border-radius: 18px;
@@ -70,17 +75,17 @@ padding-right: 30px;
   width: 110px;
   text-align: center;
   vertical-align: middle;
-
 }
 
+/* line 81, ../sass/_main.scss */
 .nav-login-text {
   font-family: SourceHanSansSC-Regular;
-font-size: 16px;
-color: #707070;
-letter-spacing: 1.38px;
-
+  font-size: 16px;
+  color: #707070;
+  letter-spacing: 1.38px;
 }
 
+/* line 89, ../sass/_main.scss */
 .nav-div {
   float: right;
   padding-top: 1%;

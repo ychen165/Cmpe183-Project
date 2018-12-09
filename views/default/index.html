@@ -31,6 +31,8 @@
       <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
 
       <!--Button to toggle whether to show new post form. Hides if not logged in-->
+      <!-- chris hide the add button -->
+      <i class="novel"> Novel</i>
       <button id="post-btn" v-show="add_btn_show" v-on:click="toggle_form">Add post</button>
 
       <!-- First, let's add a form to insert blog posts. -->
@@ -64,8 +66,13 @@
       <div v-if="post_list.length === 0">There are no posts.</div>
 
       <!-- We display the posts. -->
+
+      <!-- main page will display three posts with images in each row -->
+
       <div id="post_list">
-        <div class="post_div" v-for="post in post_list">
+        <div class="container project">
+        <div class="third" v-for="post in post_list">
+
           <div class="post_title">${post.post_title}</div>
           <div class="post_content">
               <span v-if="!post.editing">
@@ -74,8 +81,8 @@
               <span v-if="post.editing">
                   <textarea v-model="post.post_content"></textarea>
               </span>
+         
           </div>
-
 
 
           <div class="attributes">
@@ -151,6 +158,13 @@
 
           </div>
         </div>
+      </div>
+
+
+
+
+
+
       </div>
     </div>
 
