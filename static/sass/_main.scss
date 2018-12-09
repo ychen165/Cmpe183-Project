@@ -23,27 +23,39 @@ div.main_content {
 
   }
 
-  i.changed {
-    color: $clrUnconfirmed;
-
-  }
-
-
-  span.likers_list {
-    color: $clrLikerList;
-  }
-
   div.reply {
     padding: 4px;
-    border: medium solid black;
+    border: small solid black;
+    background-color: $replybox;
   }
 
   i.novel {
     color: $babyblue;
-
   }
 
+  div.entry {
+    padding: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+
+    border: 1px black solid;
+  }
+  div.post_buttons {
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 20px;
+  }
+
+  div.reply_area {
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 20px;
+  }
+  div.reply {
+    margin-bottom: 20px;
+  }
 }
+
 .nav-logo {
   font-family: SourceHanSansSC-Bold;
   font-size: 32px;

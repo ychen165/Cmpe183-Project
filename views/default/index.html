@@ -73,8 +73,9 @@
         <div class="container project">
         <div class="third" v-for="post in post_list">
 
-          <div class="post_title">${post.post_title}</div>
-          <div class="post_content">
+          <div class="entry">
+            <div class="post_title">${post.post_title}</div>
+            <div class="post_content">
               <span v-if="!post.editing">
                   <div>${post.post_content}</div>
               </span>
@@ -83,7 +84,7 @@
               </span>
          
           </div>
-
+        </div>
 
           <div class="attributes">
 
