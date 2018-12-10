@@ -106,3 +106,51 @@ div.main_content div.reply {
   float: right;
   padding-top: 1%;
 }
+
+.bgimg {
+  background-color: #58C5E4;
+  background-image: url('../images/background.png');
+  margin: -16px;
+  padding: 0px;
+  height: 100%;
+}
+
+.robot {
+  background-image: url('../images/robot.png');
+}
+
+.card {
+  width: 28rem; 
+  height:38rem;
+}
+
+.card-body {
+  padding-top:165px;
+}
+
+.card-title {
+  zoom: 1.5;
+}
+
+.card-text {
+  zoom: 1.4;
+}
+
+.card-explore {
+  zoom: 1.7
+}
+
+.card-poster {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 15px;
+  color: gray;
+}
+
+.form-hint {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 18px;
+  color: #444;
+  padding-bottom: 5px;
+  padding-top: 8px;
+}
+

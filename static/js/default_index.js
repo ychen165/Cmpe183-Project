@@ -331,6 +331,7 @@ var app = function () {
             form_title: "",
             form_content: "",
             post_list: [],
+            page: 0,
             thumb_entries: [] //List to which get_thumb_entries writes to.
 
         },
@@ -360,6 +361,8 @@ var app = function () {
     if (is_logged_in) {
         // $.web2py.disableElement($("#add-post"));
         self.vue.add_btn_show = true;
+        self.vue.page = 1;
+
         // $("#add_post").show();
     }
     else {

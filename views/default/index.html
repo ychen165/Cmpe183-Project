@@ -3,6 +3,8 @@
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}" xmlns:v-on="http://www.w3.org/1999/xhtml"
         xmlns:v-on="http://www.w3.org/1999/xhtml"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+  crossorigin="anonymous">
 <script>
     var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
     var get_post_list_url = "{{=URL('api', 'get_post_list')}}";
@@ -28,38 +30,97 @@
 
 <div class="main_content">
     <div id="vue-div" class="display:none">
-      <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+    <div v-if="page === 0">
+      <div class="bgimg" style="height:800px;">
+          <h2 style="color:white;  zoom: 2; font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 10%;">
+          Turn sparks into flames 
+          <span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary">Hot</span></h3>
+          <h7 style="color:white;  zoom: 2;font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 60%;">
+          Try out the most trending platform in 2019 for students to change the world ! 
+          </h7>
+          <h7 style="color:white; font-family: SourceHanSansSC-Bold; padding-left: 30%; ">
+          </h7>
 
-      <!--Button to toggle whether to show new post form. Hides if not logged in-->
-      <!-- chris hide the add button -->
-      <i class="novel"> Novel</i>
-      <button id="post-btn" v-show="add_btn_show" v-on:click="toggle_form">Add post</button>
+          <div class="row" style="padding-left:11%; padding-top:60px;">
 
-      <!-- First, let's add a form to insert blog posts. -->
+          <div class="d-inline">
+          <div class="card" style="width: 28rem; height:38rem;">
+          <img class="card-img-top" style=" zoom: 1.5;" src="http://pluspng.com/img-png/png-logo-design-boldmedia-flat-logo-design-for-web-design-company-author-jeroen-van-eerden-670.png" alt="Card image cap"/>
+          <div class="card-body" style="padding-top:165px; ">
+          <h5 class="card-title" style=" zoom: 1.5;">TM Master</h5>
+          <p class="card-text" style=" zoom: 1.4;">An ultimate project management tool that helps manage your team and project in the most efficient way</p>
+          <a href="#" style=" zoom: 1.7;background-color:#58C5E4; border-color:#58C5E4; "class="btn btn-primary">Explore</a>
+          </div>
+          </div>
+          </div>
+
+          <div class="d-inline" style="padding-left:7%">
+          <div class="card" style="width: 28rem; height:38rem;">
+          <img class="card-img-top" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/065e3217174739.562b6c9c486a0.png" alt="Card image cap"/>
+          <div class="card-body" style="padding-top:165px">
+          <h5 class="card-title" style=" zoom: 1.5;">ONAK 2.0 - Origami Canoe</h5>
+          <p class="card-text" style=" zoom: 1.4;">We developed the ONAK 2.0 to make paddling even easier and more accessible than ever before. Our customers provided amazing feedback. </p>
+          <a href="#" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
+          </div>
+          </div>
+          </div>
+
+          <div class="d-inline" style="padding-left:7%">
+          <div class="card" style="width: 28rem; height:38rem;">
+          <img class="card-img-top" src="https://i.redd.it/xkmgc2a81w211.png" alt="Card image cap"/>
+          <div class="card-body" style="padding-top:165px">
+          <h5 class="card-title" style=" zoom: 1.5;">Hive Explorer | First Smart Insect Farm for Starters</h5>
+          <p class="card-text" style=" zoom: 1.4;">Grow edible protein and fertilizer on food waste | Grown-Ups & Kids | Fun STEM education kit | Safe, Regulated Ecosystem</p>
+          <a href="#" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
+          </div>
+          </div>
+          </div>
+          
+          </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div v-if="page === 1">
+
+    
+    
       <div id="add_post" v-show="form_set" style="display:none">
-        <div class="container form_row">
-          <div class="label quarter">
-            Title:
-          </div>
-          <div class="form threequarters">
-            <input v-model="form_title" placeholder="Enter the post title"/>
-          </div>
-        </div>
-        <div class="container form_row">
-          <div class="label quarter">
-            Content:
-          </div>
-          <div class="form threequarters">
-            <textarea v-model="form_content" placeholder="Enter the content of your post"></textarea>
-          </div>
-        </div>
-        <div class="container form_row"><div class="quarter"></div>
-          <div class="threequarters">
-            <div class="submit">
-              <button id="add-post" v-on:click="add_post">Submit</button>
-            </div>
-          </div>
-        </div>
+        <div style="padding-left:10%; width:90%" >
+
+      <label class="form-hint">Idea</label>
+      <textarea type="text" v-model="form_title" placeholder="Enter your idea"
+      class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"
+      ></textarea>
+
+      <label class="form-hint">Image url</label>
+      <textarea type="text" id="lname" name="lastname" placeholder="Enter image Url" class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"></textarea>
+
+
+      <label class="form-hint">Description</label>
+      <textarea type="text" v-model="form_content" id="lname" name="lastname" placeholder="Enter idea description" class="md-textarea form-control" 
+      style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
+      <div style="padding-top:12px;">
+      <button id="add-post" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" v-on:click="add_post">Submit</button>
+      </div>
+      </div>
+        
+      </div>
+
+      <div style="padding-left: 9%; padding-top:3%">
+      <span style="font-family: SourceHanSansSC-Bold; font-size: 32px; color: #58C5E4; letter-spacing: 2px;">
+      Trending
+      </span>
+      <div  class="right" style="padding-right:20%; padding-top:1%; width:30px" >
+         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_form">Add post</button>
+      </div>
       </div>
 
       <!-- Message in case there are no posts. -->
@@ -69,97 +130,22 @@
 
       <!-- main page will display three posts with images in each row -->
 
-      <div id="post_list">
-        <div class="container project">
-        <div class="third" v-for="post in post_list">
-
-          <div class="entry">
-            <!-- code to upload files, with control button -->
-            <div id="uploader_div" style="display:none">
-              Upload an image file: <input id="file_input" type="file" accept="image/jepg">
+      <div id="post_list" style="padding-top:5%">
+        <div class="container row" style="padding-left:10%">
+        <div class="d-inline" v-for="post in post_list" style="padding-right:50px; padding-bottom:100px">
+    
+            <div class="card" style="width: 28rem; height:42rem;">
+            <img class="card-img-top" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/065e3217174739.562b6c9c486a0.png" alt="Card image cap"/>
+            <div class="card-body" style="padding-top:165px">
+            <h5 class="card-title" style=" zoom: 1.5;">${post.post_title}</h5>
+            <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
+            <span class="card-poster">By: ${post.post_author}<br/><br/></span>
+            <a href="#" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
             </div>
-            <div class="post_title">${post.post_title}</div>
-            <div class="post_content">
-              <span v-if="!post.editing">
-                  <div>${post.post_content}</div>
-              </span>
-              <span v-if="post.editing">
-                  <textarea v-model="post.post_content"></textarea>
-              </span>
-         
-          </div>
-        </div> <!-- end of entry -->
-
-          <div class="attributes">
-
-            <!-- Code for Thumbs. -->
-<!--             <div v-if="is_logged_in" class="thumbs">
-              <span v-if="is_logged_in" class="thumb_up_class"
-                    v-on:mouseover="thumb_up_mouseover(post._idx)"
-                    v-on:mouseout="thumb_up_mouseout(post._idx)"
-                    v-on:click="thumb_up_click(post._idx)">
-                <i v-if="post._thumb === 'u'" class="fa fa-thumbs-up" v-bind:class="{changed: post.thumb === 'd'}"></i>
-                <i v-else class="fa fa-thumbs-o-up" v-bind:class="{changed: post._thumb === 'u'}"></i>
-              </span>
-
-              <span v-if="is_logged_in" class="thumb_down_class"
-                    v-on:mouseover="thumb_down_mouseover(post._idx)"
-                    v-on:mouseout="thumb_down_mouseout(post._idx)"
-                    v-on:click="thumb_down_click(post._idx)">
-                <i v-if="post._thumb == 'd'" class="fa fa-thumbs-down" v-bind:class="{changed: post.thumb === 'u'}"></i>
-                <i v-else class="fa fa-thumbs-o-down" v-bind:class="{changed: post._thumb === 'd'}"></i>
-              </span>
-
-              <span v-if="is_logged_in" class="thumb_counts" v-text="get_thumb_count(post._idx)"></span>
-            </div> -->
-
-            <div class="post_buttons">
-                <span v-if="cur_user_email == post.post_author" class="edit_buttons">
-                    <button v-if="!post.editing" id="edit_post_btn" v-on:click="toggle_edit(post._idx)">Edit Post</button>
-                    <button v-if="post.editing" id="submit_post_btn" v-on:click="toggle_edit(post._idx)">Submit</button>
-
-                </span>
-                <span class="reply_buttons">
-                    <button v-if="post._show_replies" id="hide_replies_btn" v-on:click="hide_replies(post._idx)">Hide Replies</button>
-                    <button v-if="!post._show_replies" id="show_replies_btn" v-on:click="show_replies(post._idx)">Show Replies</button>
-                </span>
             </div>
 
-          <!-- Display here a reply -->
-            <div v-if="post._show_replies" class="reply_area">
-                <span v-if="is_logged_in">
-                    <button v-if="!post._add_reply" id="add_reply_btn" v-on:click="toggle_add_reply(post._idx)">Add Reply</button>
-                    <div v-if="post._add_reply">
-                      <div class="form threequarters">
-                        <input v-model="post._cur_reply" placeholder="Enter the reply content"/>
-                      </div>
-
-                       <div class="submit">
-                        <button id="add-reply" v-on:click="add_reply(post._idx)">Submit</button>
-                      </div>
-
-                    </div>
-                </span>
-
-                <div class="reply" v-for="reply in post._replies">
-                  <div class="reply_author">Author: ${reply.reply_author}</div>
-
-                  <span v-if="!reply.editing">
-                    <div>${reply.reply_content}</div>
-                  </span>
-                  <span v-if="reply.editing">
-                      <textarea v-model="reply.reply_content"></textarea>
-                  </span>
-
-                  <div v-if="cur_user_email == reply.reply_author"class="edit_reply">
-                      <button v-if="!reply.editing" id="edit_reply_btn" v-on:click="edit_reply(post._idx, reply.id)">Edit</button>
-                      <button v-if="reply.editing" id="submit_reply_btn" v-on:click="edit_reply(post._idx, reply.id)">Submit</button>
-                  </div>
-
-                </div>
-
-            </div>
-
+        </div>
+        </div>
 
           </div>
         </div>
@@ -169,6 +155,7 @@
 
 
 
+      </div>
 
       </div>
     </div>
