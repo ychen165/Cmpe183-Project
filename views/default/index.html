@@ -17,14 +17,18 @@
 
     var cur_user_email = "{{='false' if auth.user is None else auth.user.email}}";
 
-    var set_thumb_url = "{{=URL('api', 'set_thumb', user_signature=True)}}";
-    var get_thumb_count_url = "{{=URL('api', 'get_thumb_count')}}";
-    var get_thumb_entries_url = "{{=URL('api', 'get_thumb_entries', user_signature=True)}}";
+    // var set_thumb_url = "{{=URL('api', 'set_thumb', user_signature=True)}}";
+    // var get_thumb_count_url = "{{=URL('api', 'get_thumb_count')}}";
+    // var get_thumb_entries_url = "{{=URL('api', 'get_thumb_entries', user_signature=True)}}";
 
     var edit_post_url = "{{=URL('api', 'edit_post', user_signature=True)}}";
     var add_reply_url = "{{=URL('api', 'add_reply', user_signature=True)}}";
     var get_replies_url = "{{=URL('api', 'get_replies')}}";
     var edit_reply_url = "{{=URL('api', 'edit_reply', user_signature=True)}}";
+
+    var delete_post_url ="{{=URL('api', 'delete_post', user_signature=True)}}";
+
+    var user_email = "{{='' if auth.user is None else auth.user.email}}"; 
 </script>
 {{end}}
 
@@ -183,6 +187,9 @@
               <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
             <span class="card-poster">By: ${post.post_author}<br/><br/></span>
             <a href="#" v-on:click="page=2" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
+            
+              <span v-if="user_email === post.post_author" class="fa fa-trash-o" v-on:click="delete_post(post._idx)"> </span>
+              
             </div>
             </div>
 
