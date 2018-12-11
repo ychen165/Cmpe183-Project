@@ -30,21 +30,30 @@
 
 <div class="main_content">
     <div id="vue-div" class="display:none">
+
+   
+
+
+
+
+
+
+
     <div v-if="page === 0">
-      <div class="bgimg" style="height:800px;">
-          <h2 style="color:white;  zoom: 2; font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 10%;">
+      <div class="bgimg" style="height:1000px;">
+          <h2 style="color:white;  zoom: 2.2; font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 15%;">
           Turn sparks into flames 
-          <span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary">Hot</span></h3>
+          </h3>
           <h7 style="color:white;  zoom: 2;font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 60%;">
           Try out the most trending platform in 2019 for students to change the world ! 
           </h7>
           <h7 style="color:white; font-family: SourceHanSansSC-Bold; padding-left: 30%; ">
           </h7>
 
-          <div class="row" style="padding-left:11%; padding-top:60px;">
+          <div class="card-deck" style="padding-left:11%; padding-top:140px;">
 
           <div class="d-inline">
-          <div class="card" style="width: 28rem; height:38rem;">
+            <div class="card" style="width: 28rem; height:38rem;">
           <img class="card-img-top" style=" zoom: 1.5;" src="http://pluspng.com/img-png/png-logo-design-boldmedia-flat-logo-design-for-web-design-company-author-jeroen-van-eerden-670.png" alt="Card image cap"/>
           <div class="card-body" style="padding-top:165px; ">
           <h5 class="card-title" style=" zoom: 1.5;">TM Master</h5>
@@ -82,16 +91,53 @@
     </div>
 
 
+    <div v-if="page === 2">
+      <div>
+        <div style="padding-left: 10%; width: 95%;">
+          <h2 style="color:#333;  zoom: 2; font-family: SourceHanSansSC-Bold; padding-top: 10%;">
+          Turn sparks into flames 
+          <span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary">Trending</span></h2>
+          <h7 style="color:#666;  zoom: 2;font-family: SourceHanSansSC-Bold;padding-top: 60%;">
+          An infinitely expandable magnetic building system designed for 2D and 3D creations. Let your creative side out to play.
+          </h7>
+        </div>
+        <div class="row">
+          <div style="padding-left:10%; padding-top:80px">
+            <img src="https://ksr-ugc.imgix.net/assets/023/029/858/cfe3b1594edb17e846b4db3e58f0b1b9_original.gif?ixlib=rb-1.1.0&w=680&fit=max&v=1540508086&auto=format&gif-q=50&q=92&s=b0619e702cacfbaab3c27e113549905f" alt="Card image cap"/>
+          </div>
+          <div style="padding-left:10%; padding-top:30px;">
+            <span class="form-hint" style="color:#58C5E4">Zeyun Huang <br/>  An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick </span>
+          </div>
+        </div>
 
+        <hr style="margin:50px 10%;">
 
+        <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Bold;text-align: center"> Idea </center>
+        
+        <div  style="margin:0 10%;">
+            <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">PIXL™ is a magnetic building system that allows you to create almost anything you can think up, in either 2D or 3D. </center>
+        </div>
+
+        <hr style="margin:50px 10%;">
+
+        <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Bold; text-align: center"> Plan </center>
+        
+        <div  style="margin:0 10%;">
+            <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">The PIXL™ community is growing every single day, and you can help grow it even more! Hit one of the buttons below and tag a friend or coworker who would build something #PIXLperfect with PIXL™.</center>
+        </div>
+
+        <div class="form-hint" style="margin:100px 10%; font-size:15px; color:#999">
+            End of the article
+        </div>
+        
+
+      </div>
+    </div>
 
 
 
 
     <div v-if="page === 1">
-
-    
-    
       <div id="add_post" v-show="form_set" style="display:none">
         <div style="padding-left:10%; width:90%" >
 
@@ -131,16 +177,16 @@
       <!-- main page will display three posts with images in each row -->
 
       <div id="post_list" style="padding-top:5%">
-        <div class="container row" style="padding-left:10%">
+        <div class="card-deck" style="padding-left:10%">
         <div class="d-inline" v-for="post in post_list" style="padding-right:50px; padding-bottom:100px">
     
             <div class="card" style="width: 28rem; height:42rem;">
             <img class="card-img-top" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/065e3217174739.562b6c9c486a0.png" alt="Card image cap"/>
-            <div class="card-body" style="padding-top:165px">
-            <h5 class="card-title" style=" zoom: 1.5;">${post.post_title}</h5>
-            <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
+            <div class="card-body" style="padding-top:165px;">
+              <h5 class="card-title" style="zoom: 1.5; ">${post.post_title}</h5>
+              <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
             <span class="card-poster">By: ${post.post_author}<br/><br/></span>
-            <a href="#" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
+            <a href="#" v-on:click="page=2" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
             </div>
             </div>
 
@@ -150,16 +196,14 @@
           </div>
         </div>
       </div>
-
-
-
-
-
       </div>
 
       </div>
+
+
+    
+      
     </div>
-
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>

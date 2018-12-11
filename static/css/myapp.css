@@ -109,10 +109,11 @@ div.main_content div.reply {
 
 .bgimg {
   background-color: #58C5E4;
-  background-image: url('../images/background.png');
+  background-image: url('https://i.graphicmama.com/blog/wp-content/uploads/2018/06/18081138/Flat-Design-Character-business-woman.gif');
   margin: -16px;
   padding: 0px;
-  height: 100%;
+  widows: 100%;
+  height: auto;
 }
 
 .robot {
