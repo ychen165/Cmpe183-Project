@@ -45,9 +45,10 @@ var app = function () {
                     id: data.post_id,
                     post_title: sent_title,
                     post_content: sent_content,
-                    post_author: data.post_author,
-                    can_edit: true, //Whether current user has permission to edit post.
-                    editing: false  //Whether post is currently being edited.
+                    post_author: user_email,
+                    // data.post_author,
+                    // can_edit: true, //W hether current user has permission to edit post.
+                    // editing: false  //Whether post is currently being edited.
                 };
                 self.vue.post_list.unshift(new_post); //Add new post to front of post_list.
                 // We re-enumerate the array.
@@ -319,6 +320,17 @@ var app = function () {
         p._replies[r_idx] = r;
     };
 
+    self.delete_post = function(post_idx) {
+        var p = self.vue.post_list[post_idx];
+        $.post(delete_post_url, {
+            post_id: p.id,
+        },
+        function(data) {
+            self.vue.post_list.splice(post_idx, 1);
+        }
+
+    );
+    }
 
     // Complete as needed.
     self.vue = new Vue({
@@ -332,6 +344,7 @@ var app = function () {
             form_content: "",
             post_list: [],
             page: 0,
+            user_email: user_email,
             thumb_entries: [] //List to which get_thumb_entries writes to.
 
         },
@@ -351,7 +364,8 @@ var app = function () {
             hide_replies: self.hide_replies,
             toggle_add_reply: self.toggle_add_reply,
             add_reply: self.add_reply,
-            edit_reply: self.edit_reply
+            edit_reply: self.edit_reply,
+            delete_post: self.delete_post,
         }
 
 
