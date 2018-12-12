@@ -31,6 +31,7 @@
     var user_email = "{{='' if auth.user is None else auth.user.email}}"; 
 
     var add_usr_url = "{{=URL('api', 'add_usr', user_signature=True)}}";
+    var edit_usr_url = "{{=URL('api', 'edit_usr', user_signature=True)}}";
     var get_usr_list_url = "{{=URL('api', 'get_usr_list')}}";
     // Like callbacks.
 
@@ -171,11 +172,11 @@
       Trending
       </span>
       <div  class="right" style="padding-right:20%; padding-top:1%; width:30px" >
-         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_form">Add post</button>
+         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_form">Add new post</button>
       </div>
 
         <div  class="right" style="padding-right:10%; padding-top:1%; width:30px" >
-         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="get_usr">Profile</button>
+         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="get_usr">My Profile</button>
       </div>
       </div>
 
@@ -221,7 +222,7 @@
       <div id="usr_profile" style="padding-top:5%">
 
       <div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">
-         <!-- <div v-if="user_email === usr.usr_email">  -->
+         <div v-if="user_email === usr.usr_email">  
             <div class="usr_profile" style="width: 28rem; height:42rem;">
           <img class="usr_profile-img" src="https://us.123rf.com/450wm/tuktukdesign/tuktukdesign1606/tuktukdesign160600119/59070200-user-icon-man-profile-businessman-avatar-person-icon-in-vector-illustration.jpg" alt="profile image cap" style = "width: 5rem; height:7rem;"/> 
             <div class="card-body" style="padding-top:165px;">
@@ -230,14 +231,16 @@
               <div class="usr-school" style=" zoom: 1.6;">${usr.usr_school}</div>
                <div class="usr-email" style=" zoom: 1.6;">${usr.usr_email}</div> 
               <div class="usr-experience" style=" zoom: 1.4;">${usr.usr_experience}</div>
-        <!-- </div> -->
+          </div>
         </div>
         </div>
         </div>
           </div>
 
 
-      <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform">Edit profile</button>
+      <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform">Add profile</button>
+
+      <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform1">Edit profile</button>
       </div>
 
 
@@ -270,7 +273,34 @@
       </div>
       </div>
 
+      <div v-if="usrediting === 2">
+      <div id="edit_profile">
+        <div style="padding-left:10%; width:90%" >
 
+      <label class="form-hint">Name</label>
+      <textarea type="text" v-model="usr_name" placeholder="Edit your name"
+      class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"
+      ></textarea>
+
+      <label class="form-hint">Major</label>
+      <textarea type="text" v-model="usr_major"id="lname" name="lastname" placeholder="Edit your major" class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"></textarea>
+
+
+      <label class="form-hint">School</label>
+      <textarea type="text" v-model="usr_school" id="lname" name="lastname" placeholder="Edit your school" class="md-textarea form-control" 
+      style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
+      
+      <label class="form-hint">Experience</label>
+      <textarea type="text" v-model="usr_experience" id="lname" name="lastname" placeholder="Edit your experience" class="md-textarea form-control" 
+      style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
+
+      <div style="padding-top:12px;">
+      <button id="add-post" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" v-on:click="edit_usr">Submit</button>
+      </div>
+      </div>
+        
+      </div>
+      </div>
 
 
     </div>

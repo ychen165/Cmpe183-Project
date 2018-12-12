@@ -139,6 +139,7 @@
 'Log In': 'Log In',
 'Log Out': 'Log Out',
 'Logged in': 'Logged in',
+'Logged out': 'Logged out',
 'login': '登录',
 'Login': '登录',
 'Login to the Administrative Interface': '登录到管理员界面',

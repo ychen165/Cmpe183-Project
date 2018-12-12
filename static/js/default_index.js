@@ -97,7 +97,7 @@ var app = function () {
                     usr_major: sent_major,
                     usr_school: sent_school,
                     usr_experience: sent_experience,
-                    usr_email: sent_email,
+                    // usr_email: sent_email,
                     can_edit: true, //Whether current user has permission to edit post.
                     editing: false  //Whether post is currently being edited.
                 };
@@ -215,6 +215,7 @@ var app = function () {
             // Vue.set(e, '_add_reply', false); //Boolean for whether current user can add a reply.
             // Vue.set(e, '_cur_reply', ""); //Text of new reply.
             // Vue.set(e, '_replies', []); //List of the post's replies.
+            Vue.set(e, 'usr_editing', false);
 
         });
     };
@@ -229,6 +230,9 @@ var app = function () {
         self.vue.usrediting = 1;
     };
 
+    self.toggle_usrform1 = function () {
+        self.vue.usrediting = 2;
+    };
     //Thumb up functions
     self.thumb_up_mouseover = function (post_idx) {
         var p = self.vue.post_list[post_idx];
@@ -353,6 +357,20 @@ var app = function () {
       }
     };
 
+    self.edit_usr = function(usr_idx){
+      var u = self.vue.post_list[usr_idx];
+
+            $.post(edit_usr_url, {
+                usr_id: u.id,
+                new_name: u.usr_name,
+                new_major: u.usr_major,
+                new_school: u.usr_school,
+                // new_email: u.usr_email,
+                new_experience: u.usr_experience
+            });
+
+    };
+
 
     self.show_replies = function(post_idx){
         var p = self.vue.post_list[post_idx];
@@ -441,7 +459,7 @@ var app = function () {
             usr_major:"",
             usr_school:"",
             usr_experience:"",
-            usr_email: "",
+            // usr_email: "",
             post_list: [],
             usr_list: [],
             page: 0,
@@ -476,6 +494,7 @@ var app = function () {
             add_usr: self.add_usr,
             edit_usr: self.edit_usr,
             toggle_usrform: self.toggle_usrform,
+            toggle_usrform1: self.toggle_usrform,
             get_usr: self.get_usr,
 
         }

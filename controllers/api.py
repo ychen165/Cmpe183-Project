@@ -17,7 +17,7 @@ def add_usr():
         usr_major=request.vars.usr_major,
         usr_school=request.vars.usr_school,
         usr_experience=request.vars.usr_experience,
-        usr_email = request.vars.usr_email,
+        # usr_email = request.vars.user_email,
     )
     # We return the id of the new post, so we can insert it along all the others.
     return response.json(dict(usr_id=usr_id,usr_email=auth.user.email))
@@ -41,6 +41,22 @@ def edit_post():
 #                                          )
 #     # Return id of the thumb entry
 #     return response.json(dict(thumb_id=thumb_id))
+
+@auth.requires_signature()
+def edit_usr():
+    #Simply updates content of post associated with post_id.
+    usr_id = int(request.vars.usr_id)
+    name = request.vars.new_name
+    major = request.vars.new_major
+    school = request.vars.new_school
+    experience = request.vars.new_experience
+    db(db.usr.id == usr_id).update(
+        usr_name=name,
+        usr_school = school,
+        usr_major = major,
+        usr_experience = experience
+        )
+
 
 def get_usr_list():
     results = []
