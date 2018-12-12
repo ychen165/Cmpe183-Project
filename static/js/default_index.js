@@ -440,11 +440,11 @@ var app = function () {
             post_list: [],
             usr_list: [],
             page: 0,
-<<<<<<< HEAD
+
             user_email: user_email,
-=======
+
             usrediting:0,
->>>>>>> 72cc0bb2709396ac020c771b81bc09662db66809
+
             thumb_entries: [] //List to which get_thumb_entries writes to.
 
         },
@@ -465,13 +465,13 @@ var app = function () {
             toggle_add_reply: self.toggle_add_reply,
             add_reply: self.add_reply,
             edit_reply: self.edit_reply,
-<<<<<<< HEAD
+
             delete_post: self.delete_post,
-=======
+
             add_usr: self.add_usr,
             edit_usr: self.edit_usr,
             toggle_usrform: self.toggle_usrform,
->>>>>>> 72cc0bb2709396ac020c771b81bc09662db66809
+
         }
 
 
