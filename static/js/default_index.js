@@ -73,8 +73,8 @@ var app = function () {
                 self.vue.form_title = "";
                 self.vue.form_content = "";
                 self.vue.form_image = "";
-                self.get_posts();
                 alert("add success");
+                self.get_posts();
                 self.vue.form_set = !self.vue.form_set;
                 // If you put code here, it is run BEFORE the call comes back.
             }
@@ -86,14 +86,16 @@ var app = function () {
     self.add_usr = function () {
         // We disable the button, to prevent double submission.
         $.web2py.disableElement($("#add-user"));
-        if(self.vue.usr_name.length===0)
-            self.vue.usr_name=self.vue.usr.usr_name;
-        if(self.vue.usr_major.length===0)
-            self.vue.usr_major=self.vue.usr.usr_major;
-        if(self.vue.usr_school.length===0)
-            self.vue.usr_school=self.vue.usr.usr_school;
-        if(self.vue.usr_experience.length===0)
-            self.vue.usr_experience=self.vue.usr.usr_experience;
+        if (self.vue.usr_name === null || self.vue.usr_name === undefined || self.vue.usr_name.length === 0)
+            self.vue.usr_name = self.vue.usr.usr_name;
+        if (self.vue.usr_major === null || self.vue.usr_major === undefined || self.vue.usr_major.length === 0)
+            self.vue.usr_major = self.vue.usr.usr_major;
+        if (self.vue.usr_school === null || self.vue.usr_school === undefined || self.vue.usr_school.length === 0)
+            self.vue.usr_school = self.vue.usr.usr_school;
+        if (self.vue.usr_experience === null || self.vue.usr_experience === undefined || self.vue.usr_experience.length === 0)
+            self.vue.usr_experience = self.vue.usr.usr_experience;
+        if (self.vue.usr_portrait === null || self.vue.usr_portrait === undefined || self.vue.usr_portrait.length === 0)
+            self.vue.usr_portrait = self.vue.usr.usr_portrait;
         $.post(add_usr_url,
             // Data we are sending.
             {
@@ -109,9 +111,15 @@ var app = function () {
                 // self.vue.usr_major = ""; //
                 // self.vue.usr_school = ""; //
                 // self.vue.usr_experience = ""; //
-                self.vue.usr_portrait = "";
                 self.vue.usrediting = 0;
                 self.get_usr();
+                // self.vue.usr.usr_portrait = self.vue.usr_portrait;
+                // self.vue.usr.usr_experience = self.vue.usr_experience;
+                // self.vue.usr.usr_school = self.vue.usr_school;
+                // self.vue.usr.usr_major = self.vue.usr_major;
+                // self.vue.usr.usr_name=self.vue.usr_name;
+                alert("update profile success!");
+                self.vue.usr_portrait = "";
             }
         );
 
@@ -442,14 +450,16 @@ var app = function () {
     };
 
     self.delete_post = function (post_idx) {
-        var p = self.vue.post_list[post_idx];
-        $.post(delete_post_url, {
-                post_id: p.id,
-            },
-            function (data) {
-                self.vue.post_list.splice(post_idx, 1);
-            }
-        );
+        if(confirm("Confirm to delete the post?")) {
+            var p = self.vue.post_list[post_idx];
+            $.post(delete_post_url, {
+                    post_id: p.id,
+                },
+                function (data) {
+                    self.vue.post_list.splice(post_idx, 1);
+                }
+            );
+        }
     };
 
     //Show detail

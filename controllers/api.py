@@ -22,7 +22,7 @@ def add_usr():
             usr_school=request.vars.usr_school,
             usr_experience=request.vars.usr_experience,
             usr_email=auth.user.email,
-            usr_portrait=request.vars.usr_profile
+            usr_portrait=request.vars.usr_portrait
         )
         # We return the id of the new post, so we can insert it along all the others.
         return response.json(dict(usr_id=usr_id, usr_email=auth.user.email))
@@ -32,7 +32,6 @@ def add_usr():
             usr_major=request.vars.usr_major,
             usr_school=request.vars.usr_school,
             usr_experience=request.vars.usr_experience,
-            usr_email=auth.user.email,
             usr_portrait=request.vars.usr_portrait
         )
         return "success"
