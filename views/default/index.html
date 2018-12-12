@@ -175,7 +175,7 @@
       </div>
 
         <div  class="right" style="padding-right:10%; padding-top:1%; width:30px" >
-         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page = 3; get_usr">Profile</button>
+         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="get_usr">Profile</button>
       </div>
       </div>
 
@@ -207,10 +207,7 @@
         </div>
           </div>
         </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 0bc764a24fdfb0ddbf42839c4ddf1178524f3a03
 
     <div v-if="page === 3">
       <span style="font-family: SourceHanSansSC-Bold; font-size: 28px; color: #58C5E4; letter-spacing: 2px;">
@@ -224,16 +221,16 @@
       <div id="usr_profile" style="padding-top:5%">
 
       <div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">
-
+         <!-- <div v-if="user_email === usr.usr_email">  -->
             <div class="usr_profile" style="width: 28rem; height:42rem;">
-  <!--           <img class="usr_profile-img" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/065e3217174739.562b6c9c486a0.png" alt="profile image cap"/> -->
+          <img class="usr_profile-img" src="https://us.123rf.com/450wm/tuktukdesign/tuktukdesign1606/tuktukdesign160600119/59070200-user-icon-man-profile-businessman-avatar-person-icon-in-vector-illustration.jpg" alt="profile image cap" style = "width: 5rem; height:7rem;"/> 
             <div class="card-body" style="padding-top:165px;">
-              <div class="usr-name" style="zoom: 1.5; ">${usr.usr_name}</div>
-              <div class="usr-major" style=" zoom: 1.4;">${usr.usr_major}</div>
-              <div class="usr-school" style=" zoom: 1.4;">${usr.usr_school}</div>
-               <div class="usr-email" style=" zoom: 1.4;">${usr.usr_email}</div> 
+              <div class="usr-name" style="zoom: 1.8; ">${usr.usr_name}</div>
+              <div class="usr-major" style=" zoom: 1.6;">${usr.usr_major}</div>
+              <div class="usr-school" style=" zoom: 1.6;">${usr.usr_school}</div>
+               <div class="usr-email" style=" zoom: 1.6;">${usr.usr_email}</div> 
               <div class="usr-experience" style=" zoom: 1.4;">${usr.usr_experience}</div>
-
+        <!-- </div> -->
         </div>
         </div>
         </div>
@@ -283,11 +280,6 @@
 
 
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0bc764a24fdfb0ddbf42839c4ddf1178524f3a03
 
 
       </div>
