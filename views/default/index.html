@@ -32,6 +32,7 @@
 
     var add_usr_url = "{{=URL('api', 'add_usr', user_signature=True)}}";
     var get_usr_url = "{{=URL('api', 'get_user', user_signature=True)}}";
+    var get_usr_by_email_url = "{{=URL('api', 'get_user_by_email')}}";
     // Like callbacks.
 
 </script>
@@ -102,7 +103,7 @@
        <div style="padding-left: 10%; width: 95%;">
           <h2 style="color:#333;  zoom: 2; font-family: SourceHanSansSC-Bold; padding-top: 10%;">
           ${detail.post_title}
-          <span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary">${detail.post_author}</span></h2>
+          <a><span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary" v-on:click="get_usr_by_email(detail.post_author)">${detail.post_author}</span></a></h2>
         </div>
         <div class="row">
           <div style="padding-left:10%; padding-top:80px;margin: auto">
@@ -120,7 +121,7 @@
             <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">${replay}</center>
         </div>
         <div class="form-hint" style="margin:100px 10%; font-size:15px; color:#999">
-            End of the article
+            End
         </div>
       </div>
     </div>
@@ -147,6 +148,7 @@
       style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
       <div style="padding-top:12px;">
       <button id="add-post" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" v-on:click="add_post">Submit</button>
+          <button style=" zoom: 1.7; background-color:red; border-color:red;" v-on:click="form_set=false">Cancel</button>
       </div>
       </div>
 
@@ -159,7 +161,6 @@
       <div  class="right" style="padding-right:20%; padding-top:1%; width:30px" >
          <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_form">Add post</button>
       </div>
-
         <div  class="right" style="padding-right:10%; padding-top:1%; width:30px" >
          <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="get_usr">Profile</button>
       </div>
@@ -177,8 +178,8 @@
             <!--${post_list}-->
         <div class="d-inline" v-for="post in post_list" style="padding-right:50px; padding-bottom:100px">
             <div class="card" style="width: 28rem; height:42rem;">
-            <img class="card-img-top" v-bind:src="post.post_image" style="max-width: 20em;max-height: 20em;margin: 0 auto auto;"/>
-            <div class="card-body" style="padding-top:165px;">
+            <img class="card-img-top" v-bind:src="post.post_image" style="max-width: 20em;max-height: 200px;margin: 0 auto auto;"/>
+            <div class="card-body" style="padding-top:195px;">
               <h5 class="card-title" style="zoom: 1.5; ">${post.post_title}</h5>
               <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
             <span class="card-poster">By: ${post.post_author}<br/><br/></span>
@@ -198,7 +199,8 @@
       Profile
       </span>
        <!-- <div v-if="profile.status === 0">There are no profile information. Please add.</div> -->
-       <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
+       <button class="btn btn-primary"  v-if="usrediting === 0"  style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
+        <button class="btn btn-warning"  v-if="usrediting === 1"  style="zoom:1.5"  v-on:click="usrediting=0">Cancel</button>
 
       <div v-if="usrediting === 0">
 
@@ -223,43 +225,86 @@
         </div>
         </div>
           </div>
-
-
-      <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform">Edit profile</button>
-      </div>
-
-
-      <div v-if="usrediting === 1">
+        <div v-if="usrediting === 1">
       <div id="edit_profile">
         <div style="padding-left:10%; width:90%" >
         <label class="form-hint">Profile:</label>
-        <input type="file"  @change="on_profile_change" v-model="form_image"  placeholder="Enter image Url" class="md-textarea form-control"
+        <input type="file"  @change="on_profile_change"  placeholder="Enter image Url" class="md-textarea form-control"
                    rows="1" style="border-color:#58C5E4;font-size:14px;padding: 0;"/>
 
       <label class="form-hint">Name</label>
       <textarea type="text" v-model="usr_name" placeholder="Enter your name"
       class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"
-      ></textarea>
+       v-model:value="usr.usr_name"></textarea>
 
       <label class="form-hint">Major</label>
-      <textarea type="text" v-model="usr_major"id="lname" name="lastname" placeholder="Enter your major" class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"></textarea>
+      <textarea type="text" v-model="usr_major"id="lname" name="lastname" placeholder="Enter your major" class="md-textarea form-control"
+                rows="1" style="border-color:#58C5E4;font-size:14px" v-model:value="usr.usr_major">${usr.usr_major}</textarea>
 
 
       <label class="form-hint">School</label>
-      <textarea type="text" v-model="usr_school" id="lname" name="lastname" placeholder="Enter your school" class="md-textarea form-control"
-      style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
+      <textarea type="text" v-model="usr_school" id="lname" name="lastname" placeholder="Enter your school" class="md-textarea form-control" rows="1"
+      style="border-color:#58C5E4;font-size:14px;" v-model:value="usr.usr_school"></textarea>
 
       <label class="form-hint">Experience</label>
       <textarea type="text" v-model="usr_experience" id="lname" name="lastname" placeholder="Enter your experience" class="md-textarea form-control"
-      style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
+      style="border-color:#58C5E4;font-size:14px; height:100px" v-model:value="usr.usr_experience"></textarea>
 
       <div style="padding-top:12px;">
       <button id="add-post" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" v-on:click="add_usr">Submit</button>
       </div>
       </div>
+      </div>
+      </div>
+      <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform">Edit profile</button>
+      </div>
 
-      </div>
-      </div>
+    <div v-if="page === 4">
+          <div>
+              <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
+              <button class="btn btn-warning" style="zoom:1.5"  v-on:click="page=2">Back</button>
+              <hr>
+              <h1>His/Her Profile:</h1>
+              <div  style="padding-top:5%;margin: auto;text-align: center">
+      <!--<div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">-->
+         <!-- <div v-if="user_email === usr.usr_email">  -->
+            <!--<div class="usr_profile" style="width: 28rem; height:42rem;">-->
+          <img class="usr_profile-img" v-bind:src="other_detail.usr_portrait" v-if="other_detail.usr_portrait" alt="profile image cap" style = "max-width: 5rem; max-height:7rem;"/>
+            <div class="card-body">
+              <div class="usr-name" style="zoom: 1.8; " v-if="other_detail.first_name">FirstName: ${other_detail.first_name}</div>
+                <div class="usr-major" style=" zoom: 1.6;" v-if="other_detail.last_name">LastName: ${other_detail.last_name}</div>
+                <div class="usr-major" style=" zoom: 1.6;" v-if="other_detail.usr_name">UserName: ${other_detail.usr_name}</div>
+                <div class="usr-school" v-if="other_detail.email" style=" zoom: 1.6;">Email: ${other_detail.email}</div>
+                <div class="usr-email" v-if="other_detail.usr_email" style=" zoom: 1.6;">Email:${other_detail.usr_email}</div>
+                <div class="usr-experience" v-if="other_detail.usr_experience" style=" zoom: 1.4;">
+                    Experience: ${usr.usr_experience}
+                </div>
+                <div class="usr-email" v-if="other_detail.usr_school" style=" zoom: 1.6;">School:${other_detail.usr_school}</div>
+                <div class="usr-email" v-if="other_detail.usr_major" style=" zoom: 1.6;">Email:${other_detail.usr_major}</div>
+                <div class="usr-experience" v-if="!other_detail.usr_experience" style=" zoom: 1.4;">
+                    Sorry,  has no info  ...
+                </div>
+                <hr>
+                <h2>His/Her project(s):</h2>
+                <div class="card-deck" style="padding-left:10%">
+                    <div class="d-inline" v-for="p in post_list" style="padding-right:50px; padding-bottom:20px" v-if="p.post_author == other_detail.usr_email">
+                        <div class="card" style="width: 28rem; height:42rem;">
+                        <img class="card-img-top" v-bind:src="p.post_image" style="max-width: 20em;max-height: 200px;margin: 0 auto auto;"/>
+                        <div class="card-body" style="padding-top:195px;">
+                          <h5 class="card-title" style="zoom: 1.5; ">${p.post_title}</h5>
+                          <p class="card-text" style=" zoom: 1.4;">${p.post_content}</p>
+                        <span class="card-poster">By: ${p.post_author}<br/><br/></span>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- </div> -->
+        <!--</div>-->
+        </div>
+          </div>
+        </div>
     </div>
         <!-- end of page1 -->
       </div>
@@ -267,6 +312,7 @@
 
       </div>
     </div>
+
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>

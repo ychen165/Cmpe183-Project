@@ -34,18 +34,26 @@ var app = function () {
 
     self.on_profile_change = function (e) {
         var reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function (o) {
             // do something with the data result
-            var dataURL = e.target.result;
-            console.log(e);
+            var dataURL = o.target.result;
+            console.log(o);
             self.vue.usr_portrait = dataURL;
         };
         reader.readAsDataURL(e.target.files[0]);
     };
 
     self.add_post = function () {
+        if (self.vue.form_title.length === 0) {
+            alert("input idea plz!");
+            return;
+        }
         if (self.vue.form_image.length === 0) {
             alert("choose the image plz!");
+            return;
+        }
+        if (self.vue.form_content.length === 0) {
+            alert("input description plz!");
             return;
         }
         // We disable the button, to prevent double submission.
@@ -78,6 +86,14 @@ var app = function () {
     self.add_usr = function () {
         // We disable the button, to prevent double submission.
         $.web2py.disableElement($("#add-user"));
+        if(self.vue.usr_name.length===0)
+            self.vue.usr_name=self.vue.usr.usr_name;
+        if(self.vue.usr_major.length===0)
+            self.vue.usr_major=self.vue.usr.usr_major;
+        if(self.vue.usr_school.length===0)
+            self.vue.usr_school=self.vue.usr.usr_school;
+        if(self.vue.usr_experience.length===0)
+            self.vue.usr_experience=self.vue.usr.usr_experience;
         $.post(add_usr_url,
             // Data we are sending.
             {
@@ -85,16 +101,14 @@ var app = function () {
                 usr_major: self.vue.usr_major,
                 usr_school: self.vue.usr_school,
                 usr_experience: self.vue.usr_experience,
-                usr_email: self.vue.usr_email,
                 usr_portrait: self.vue.usr_portrait
             },
             // What do we do when the post succeeds?
             function (data) {
-                var sent_name = self.vue.usr_name; // Makes a copy
-                self.vue.usr_major = ""; //
-                self.vue.usr_school = ""; //
-                self.vue.usr_experience = ""; //
-                self.vue.usr_email = "";
+                // self.vue.usr_name = ""; //
+                // self.vue.usr_major = ""; //
+                // self.vue.usr_school = ""; //
+                // self.vue.usr_experience = ""; //
                 self.vue.usr_portrait = "";
                 self.vue.usrediting = 0;
                 self.get_usr();
@@ -161,7 +175,26 @@ var app = function () {
             }
         );
         console.log("I fired the get");
+    };
 
+    self.get_usr_by_email = function (email) {
+        console.log(email);
+        self.vue.page = 4;
+        $.post(get_usr_by_email_url,
+            {
+                email: email
+            },
+            function (data) {
+                // I am assuming here that the server gives me a nice list
+                // of posts, all ready for display.
+                self.vue.other_detail = data.user;
+                // Post-processing.
+                console.log(self.vue.usr);
+                // self.process_usr();
+                console.log("I got my usr profile");
+            }
+        );
+        console.log("I fired the get");
     };
 
     self.process_posts = function () {
@@ -424,7 +457,12 @@ var app = function () {
         self.vue.page = 2;
         self.vue.detail = self.vue.post_list[post_idx];
         console.log(post_idx)
-    }
+    };
+
+    self.go_other_detail = function (email) {
+        console.log(email);
+        self.vue.page = 4;
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -449,7 +487,8 @@ var app = function () {
             user_email: user_email,
             usrediting: 0,
             thumb_entries: [], //List to which get_thumb_entries writes to.,
-            detail: {}//Page 2 detail info
+            detail: {},//Page 2 detail info
+            other_detail: {}//Page 4 other detail info
         },
         methods: {
             add_post: self.add_post,
@@ -475,8 +514,9 @@ var app = function () {
             get_usr: self.get_usr,
             go_detail: self.go_detail,
             on_file_change: self.on_file_change,
-            on_profile_change: self.on_profile_change
-
+            on_profile_change: self.on_profile_change,
+            go_other_detail: self.go_other_detail,
+            get_usr_by_email: self.get_usr_by_email
         }
 
 

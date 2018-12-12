@@ -48,12 +48,20 @@ def edit_post():
 
 @auth.requires_signature()
 def get_user():
-    print(auth)
     user = db(db.usr.usr_email == auth.user.email).select()
     if len(user) <= 0:
         return response.json(dict(user=auth.user))
     else:
         return response.json(dict(user=user[0]))
+
+
+def get_user_by_email():
+    user = db(db.usr.usr_email == request.vars.email).select()
+    if len(user) <= 0:
+        ret = {}
+    else:
+        ret = user[0]
+    return response.json(dict(user=ret))
 
 
 # @auth.requires_signature()
