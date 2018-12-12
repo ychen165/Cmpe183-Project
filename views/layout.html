@@ -9,6 +9,8 @@
     <link href="{{=URL('static','css/calendar.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{=URL('static','css/web2py.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{=URL('static','css/myapp.css')}}" rel="stylesheet" type="text/css"/>
+    <script src="{{=URL('static', 'js/vue.js')}}" xmlns:v-on="http://www.w3.org/1999/xhtml"
+        xmlns:v-on="http://www.w3.org/1999/xhtml"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
@@ -41,13 +43,11 @@
 
 
       <main class="white">
-      
+      <div class="vue-div">
       <span class="nav-logo" >StartUp</span>
       <span class="nav-logo-sub">for students</span>
       <div class="nav-div">
-            <span class="nav-button" v-on:click="add_post">How it works</span>
-            <span class="nav-button" v-on:click="add_post">Contact Us</span>
-        
+      
           <!--   <span class="nav-login"></span> -->
 
               <!-- <span class="nav-login-text">My Account -->
@@ -62,6 +62,7 @@
             </ul>
           </div> 
       </span>
+      </div>
 
 
 
@@ -71,9 +72,9 @@
     <footer class="black">
       
       <div class="container padded max900">
-        <div class="fill" style="color:white; font-family: SourceHanSansSC-Bold;">
+        <div class="fill" style="color:white; font-family: SourceHanSansSC-Bold; font-size:14px">
           UI/Front End developer: Zeyun Huang<br/>
-          Backend Support: Yang Chen, Chris Shao
+          Backend developer: Yang Chen, Chris Shao
         </div>
       </div>
     </footer>
