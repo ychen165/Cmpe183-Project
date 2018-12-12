@@ -28,82 +28,106 @@ def edit_post():
     content = request.vars.new_content
     db(db.post.id == post_id).update(post_content=content)
 
-@auth.requires_signature()
-def set_thumb():
-    this_post_id = int(request.vars.post_id)
-    this_thumb_state = request.vars.state
-    this_user_email = auth.user.email
-    thumb_id = db.thumb.update_or_insert((db.thumb.post_id == this_post_id) & (db.thumb.user_email == this_user_email),
-                                        post_id = this_post_id,
-                                        thumb_state = this_thumb_state,
-                                        user_email = this_user_email
-                                         )
-    # Return id of the thumb entry
-    return response.json(dict(thumb_id=thumb_id))
+# @auth.requires_signature()
+# def set_thumb():
+#     this_post_id = int(request.vars.post_id)
+#     this_thumb_state = request.vars.state
+#     this_user_email = auth.user.email
+#     thumb_id = db.thumb.update_or_insert((db.thumb.post_id == this_post_id) & (db.thumb.user_email == this_user_email),
+#                                         post_id = this_post_id,
+#                                         thumb_state = this_thumb_state,
+#                                         user_email = this_user_email
+#                                          )
+#     # Return id of the thumb entry
+#     return response.json(dict(thumb_id=thumb_id))
 
 
 def get_post_list():
     results = []
-    if auth.user is None:
-        # Not logged in.
-        rows = db().select(db.post.ALL, orderby=~db.post.post_time)
-        for row in rows:
-            results.append(dict(
+
+    rows = db().select(db.post.ALL, orderby=~db.post.post_time)
+    for row in rows:
+        # editing = False
+        # can_edit = False
+        # if auth.user is not None:
+
+        results.append(dict(
                 id=row.id,
                 post_title=row.post_title,
                 post_content=row.post_content,
                 post_author=row.post_author,
-                thumb = None,
-                editing = False,
-                can_edit = False,
-            ))
-    else:
-        # Logged in.
-        rows = db().select(db.post.ALL, db.thumb.ALL,
-                            left=[
-                                db.thumb.on((db.thumb.post_id == db.post.id) & (db.thumb.user_email == auth.user.email)),
-                            ],
-                            orderby=~db.post.post_time)
-        for row in rows:
-            results.append(dict(
-                id=row.post.id,
-                post_title=row.post.post_title,
-                post_content=row.post.post_content,
-                post_author=row.post.post_author,
-                thumb = None if row.thumb.id is None else row.thumb.thumb_state,
-                editing = False,
-                can_edit = row.post.post_author == auth.user.email
-            ))
+        ))
+
+    # if auth.user is None:
+    #     # Not logged in.
+    #     rows = db().select(db.post.ALL, orderby=~db.post.post_time)
+    #     for row in rows:
+    #         results.append(dict(
+    #             id=row.id,
+    #             post_title=row.post_title,
+    #             post_content=row.post_content,
+    #             post_author=row.post_author,
+    #             thumb = None,
+    #             editing = False,
+    #             can_edit = False,
+    #         ))
+    # else:
+    #     # Logged in.
+    #     rows = db().select(db.post.ALL, db.thumb.ALL,
+    #                         left=[
+    #                             db.thumb.on((db.thumb.post_id == db.post.id) & (db.thumb.user_email == auth.user.email)),
+    #                         ],
+    #                         orderby=~db.post.post_time)
+    #     for row in rows:
+    #         results.append(dict(
+    #             id=row.post.id,
+    #             post_title=row.post.post_title,
+    #             post_content=row.post.post_content,
+    #             post_author=row.post.post_author,
+    #             thumb = None if row.thumb.id is None else row.thumb.thumb_state,
+    #             editing = False,
+    #             can_edit = row.post.post_author == auth.user.email
+    #         ))
     # For homogeneity, we always return a dictionary.
     return response.json(dict(post_list=results))
 
-
-def get_thumb_count():
-    # Get sum of thumbs for specified post.
+@auth.requires_signature()
+def delete_post():
     post_id = int(request.vars.post_id)
-    count = 0
-    rows = db(db.thumb.post_id == post_id).select(db.thumb.user_email, db.thumb.thumb_state)
+    r = db.post(post_id)
+    if r is not None:
+        if r.post_author != auth.user.email:
+            raise(HTTP(403, "Not authorized"))
 
-    for row in rows:
-        # if auth.user.email != row.user_email:
-            if row.thumb_state == 'u':
-                count += 1
-            elif row.thumb_state == 'd':
-                count -= 1
+        r.delete_record()
+    return "ok"
 
-    return response.json(dict(thumb_count=3))
+# def get_thumb_count():
+#     # Get sum of thumbs for specified post.
+#     post_id = int(request.vars.post_id)
+#     count = 0
+#     rows = db(db.thumb.post_id == post_id).select(db.thumb.user_email, db.thumb.thumb_state)
+
+#     for row in rows:
+#         # if auth.user.email != row.user_email:
+#             if row.thumb_state == 'u':
+#                 count += 1
+#             elif row.thumb_state == 'd':
+#                 count -= 1
+
+#     return response.json(dict(thumb_count=3))
 
 
-def get_thumb_entries():
-    if auth.user is None:
-        rows = db().select(db.thumb.ALL)
-    else:
-        rows = db(db.thumb.user_email != auth.user.email).select(db.thumb.ALL)
+# def get_thumb_entries():
+#     if auth.user is None:
+#         rows = db().select(db.thumb.ALL)
+#     else:
+#         rows = db(db.thumb.user_email != auth.user.email).select(db.thumb.ALL)
 
-    for row in rows:
-        print(row)
+#     for row in rows:
+#         print(row)
 
-    return response.json(dict(thumb_entries=rows))
+#     return response.json(dict(thumb_entries=rows))
 
 @auth.requires_signature()
 def edit_post():
