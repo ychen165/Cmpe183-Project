@@ -60,7 +60,7 @@ var app = function () {
         self.vue.form_set = !self.vue.form_set;
     };
 
-
+    
 
     self.add_usr = function () {
         // We disable the button, to prevent double submission.
