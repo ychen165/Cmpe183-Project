@@ -99,7 +99,6 @@
 
     <div v-if="page === 2">
       <div>
-        <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
        <div style="padding-left: 10%; width: 95%;">
           <h2 style="color:#333;  zoom: 2; font-family: SourceHanSansSC-Bold; padding-top: 10%;">
           ${detail.post_title}
@@ -121,7 +120,10 @@
             <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">${replay}</center>
         </div>
         <div class="form-hint" style="margin:100px 10%; font-size:15px; color:#999">
-            End
+            End of article
+        </div>
+        <div style="padding-left:10%; padding-bottom:5%">
+          <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5" v-on:click="page=1">Back to home</button>
         </div>
       </div>
     </div>
@@ -177,14 +179,20 @@
         <div class="card-deck" style="padding-left:10%">
             <!--${post_list}-->
         <div class="d-inline" v-for="post in post_list" style="padding-right:50px; padding-bottom:100px">
-            <div class="card" style="width: 28rem; height:42rem;">
-            <img class="card-img-top" v-bind:src="post.post_image" style="max-width: 20em;max-height: 200px;margin: 0 auto auto;"/>
+            <div class="card" style="width: 28rem; height:44rem;">
+            <img class="card-img-top" v-bind:src="post.post_image" 
+            style="
+            margin: 0 
+            width: 28rem;
+            height: 17rem;
+            object-fit: cover;
+            "/>
             <div class="card-body" style="padding-top:195px;">
               <h5 class="card-title" style="zoom: 1.5; ">${post.post_title}</h5>
               <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
             <span class="card-poster">By: ${post.post_author}<br/><br/></span>
             <a href="#" v-on:click="go_detail(post._idx)" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
-              <span v-if="user_email === post.post_author" class="fa fa-trash-o" v-on:click="delete_post(post._idx)"> </span>
+            <a href="#" v-on:click="delete_post(post._idx)" v-if="user_email === post.post_author" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Delete</a> 
             </div>
             </div>
 
@@ -194,40 +202,51 @@
         </div>
 
 
-    <div v-if="page === 3">
-      <span style="font-family: SourceHanSansSC-Bold; font-size: 28px; color: #58C5E4; letter-spacing: 2px;">
-      Profile
-      </span>
-       <!-- <div v-if="profile.status === 0">There are no profile information. Please add.</div> -->
-       <button class="btn btn-primary"  v-if="usrediting === 0"  style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
-        <button class="btn btn-warning"  v-if="usrediting === 1"  style="zoom:1.5"  v-on:click="usrediting=0">Cancel</button>
+    <div v-if="page === 3"  style="background-color:#58C5E4 ;margin: -16px;
+    padding: 0px;
+    widows: 100%;
+    height: auto;">
+    <div style="padding-left:10%; padding-top:10%">
+    
+      <button class="btn btn-warning"  v-if="usrediting === 1"  style="zoom:1.5"  v-on:click="usrediting=0">Cancel</button>
 
       <div v-if="usrediting === 0">
 
-      <div id="usr_profile" style="padding-top:5%;margin: auto;text-align: left">
-      <!--<div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">-->
-         <!-- <div v-if="user_email === usr.usr_email">  -->
-            <!--<div class="usr_profile" style="width: 28rem; height:42rem;">-->
-          <img class="usr_profile-img" v-bind:src="usr.usr_portrait" v-if="usr.usr_portrait" alt="profile image cap" style = "max-width: 5rem; max-height:7rem;"/>
+      <div style="background-color:white; margin-right:10%;  border-radius: 20px;">
+          <div class="right" style="padding-top:20px; padding-right:20px">
+          <button class="btn btn-outline-primary" style="border-color:#58C5E4;border-radius: 20px; color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform">Edit profile</button>
+          </div>
+        <div style="padding-top:60px">
+        <img class="rounded-circle" v-bind:src="usr.usr_portrait" v-if="usr.usr_portrait" alt="profile image cap" style = "
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);        
+        "/>
+        <div class="form-hint" style="text-align:center;font-size:24px;font-family: SourceHanSansSC-Bold; color:#32325D; padding-top:2%"> ${usr.usr_name} </div>
+        <div class="form-hint" style="font-size:15px;text-align:center;color:#5E5E7B; ">${usr.usr_email}</div>
+        <div class="form-hint" style="font-size:18px;text-align:center;color:#32325D;  padding-top:1%">${usr.usr_school}</div>
+        <div class="form-hint" style="text-align:center ;color:#32325D">${usr.usr_major}</div>
+                        <hr style="margin:50px 10%;">
+
+        <div class="form-hint" style="text-align:center ;color:#32325D; padding-bottom:80px">${usr.usr_experience}</div>
+        </div>
+      </div>
+
+
+
+      <div id="usr_profile" style="padding-top:5%;margin: auto;text-align: left;">
+  
             <div class="card-body">
-              <div class="usr-name" style="zoom: 1.8; " v-if="usr.first_name">FirstName: ${usr.first_name}</div>
-                <div class="usr-major" style=" zoom: 1.6;" v-if="usr.last_name">LastName: ${usr.last_name}</div>
-                <div class="usr-major" style=" zoom: 1.6;" v-if="usr.usr_name">UserName: ${usr.usr_name}</div>
-                <div class="usr-school" v-if="usr.email" style=" zoom: 1.6;">Email: ${usr.email}</div>
-                <div class="usr-email" v-if="usr.usr_email" style=" zoom: 1.6;">Email:${usr.usr_email}</div>
-                <div class="usr-email" v-if="usr.usr_school" style=" zoom: 1.6;">School:${usr.usr_school}</div>
-                <div class="usr-email" v-if="usr.usr_major" style=" zoom: 1.6;">Major:${usr.usr_major}</div>
-                <div class="usr-experience" v-if="usr.usr_experience" style=" zoom: 1.4;">
-                    Experience: ${usr.usr_experience}
-                </div>
-        <!-- </div> -->
-        <!--</div>-->
+              
         </div>
         </div>
           </div>
         <div v-if="usrediting === 1">
       <div id="edit_profile">
-        <div style="padding-left:10%; width:90%" >
+        <div style="width:90%" >
         <label class="form-hint">Profile:</label>
         <input type="file"  @change="on_profile_change"  placeholder="Enter image Url" class="md-textarea form-control"
                    rows="1" style="border-color:#58C5E4;font-size:14px;padding: 0;"/>
@@ -256,43 +275,52 @@
       </div>
       </div>
       </div>
-      <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="toggle_usrform">Edit profile</button>
+      
+      <div style="padding-bottom:5%">
+      <button class="btn btn-primary"  v-if="usrediting === 0"  style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Back to home</button>
+      </div>
+      </div> 
       </div>
 
-    <div v-if="page === 4">
-          <div>
-              <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
-              <button class="btn btn-warning" style="zoom:1.5"  v-on:click="page=2">Back</button>
-              <hr>
-              <h1>His/Her Profile:</h1>
-              <div  style="padding-top:5%;margin: auto;">
-      <!--<div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">-->
-         <!-- <div v-if="user_email === usr.usr_email">  -->
-            <!--<div class="usr_profile" style="width: 28rem; height:42rem;">-->
-                  <div style="text-align: left;width: 10%;margin: auto">
-          <img class="usr_profile-img" v-bind:src="other_detail.usr_portrait" v-if="other_detail.usr_portrait" alt="profile image cap" style = "max-width: 5rem; max-height:7rem;"/>
-            <div class="card-body">
-              <div class="usr-name" style="zoom: 1.8; " v-if="other_detail.first_name">FirstName: ${other_detail.first_name}</div>
-                <div class="usr-major" style=" zoom: 1.6;" v-if="other_detail.last_name">LastName: ${other_detail.last_name}</div>
-                <div class="usr-major" style=" zoom: 1.6;" v-if="other_detail.usr_name">UserName: ${other_detail.usr_name}</div>
-                <div class="usr-school" v-if="other_detail.email" style=" zoom: 1.6;">Email: ${other_detail.email}</div>
-                <div class="usr-email" v-if="other_detail.usr_email" style=" zoom: 1.6;">Email:${other_detail.usr_email}</div>
-                <div class="usr-email" v-if="other_detail.usr_school" style=" zoom: 1.6;">School:${other_detail.usr_school}</div>
-                <div class="usr-email" v-if="other_detail.usr_major" style=" zoom: 1.6;">Major:${other_detail.usr_major}</div>
-                <div class="usr-experience" v-if="other_detail.usr_experience" style=" zoom: 1.4;">
-                    Experience: ${usr.usr_experience}
-                </div>
-                <div class="usr-experience" v-if="!other_detail.usr_experience" style=" zoom: 1.4;">
-                    Sorry,  has no info  ...
-                </div>
-            </div>
-                  </div>
-                <hr>
-                <h2>His/Her project(s):</h2>
-                <div class="card-deck" style="padding-left:10%">
+    <div v-if="page === 4"
+      style="background-color:#58C5E4 ;margin: -16px;
+    padding: 0px;
+    widows: 100%;
+    height: auto;">
+    <div style="padding-left:10%; padding-top:10%">
+    
+      <button class="btn btn-warning"  v-if="usrediting === 1"  style="zoom:1.5"  v-on:click="usrediting=0">Cancel</button>
+
+      <div v-if="usrediting === 0">
+
+      <div style="background-color:white; margin-right:10%;  border-radius: 20px;">
+   
+        <div style="padding-top:60px">
+        <img class="rounded-circle" v-bind:src="other_detail.usr_portrait" v-if="other_detail.usr_portrait" alt="profile image cap" style = "
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);        
+        "/>
+        <div class="form-hint" style="text-align:center;font-size:24px;font-family: SourceHanSansSC-Bold; color:#32325D; padding-top:2%"> ${usr.usr_name} </div>
+        <div class="form-hint" style="font-size:15px;text-align:center;color:#5E5E7B; ">${other_detail.usr_email}</div>
+        <div class="form-hint" style="font-size:18px;text-align:center;color:#32325D;  padding-top:1%">${other_detail.usr_school}</div>
+        <div class="form-hint" style="text-align:center ;color:#32325D">${other_detail.usr_major}</div>
+                        <hr style="margin:50px 10%;">
+
+        <div class="form-hint" style="text-align:center ;color:#32325D; padding-bottom:80px">${other_detail.usr_experience}</div>
+                                <hr style="margin:50px 10%;">
+        <div class="card-deck" style="padding-left:10%">
                     <div class="d-inline" v-for="p in post_list" style="padding-right:50px; padding-bottom:20px" v-if="p.post_author == other_detail.usr_email">
                         <div class="card" style="width: 28rem; height:42rem;">
-                        <img class="card-img-top" v-bind:src="p.post_image" style="max-width: 20em;max-height: 200px;margin: 0 auto auto;"/>
+                        <img class="card-img-top" v-bind:src="p.post_image" style="
+                        margin: 0 
+                        width: 28rem;
+                        height: 17rem;
+                        object-fit: cover;
+                        "/>
                         <div class="card-body" style="padding-top:195px;">
                           <h5 class="card-title" style="zoom: 1.5; ">${p.post_title}</h5>
                           <p class="card-text" style=" zoom: 1.4;">${p.post_content}</p>
@@ -300,9 +328,15 @@
                         </div>
                      </div>
                 </div>
-        <!-- </div> -->
-        <!--</div>-->
         </div>
+      </div>
+
+
+          </div>
+          <div style="padding-left:10%">
+              <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
+              <button class="btn btn-warning" style="zoom:1.5"  v-on:click="page=2">Back</button>
+      
           </div>
         </div>
     </div>
