@@ -24,6 +24,7 @@
 'Ajax Recipes': 'Ajax Recipes',
 'An error occured, please %s the page': 'An error occured, please %s the page',
 'appadmin is disabled because insecure channel': '管理界面在非安全通道下被禁用',
+'Apply changes': 'Apply changes',
 'Are you sure you want to delete file "%s"?': '确定要删除文件"%s"?',
 'Are you sure you want to delete this object?': '确定要删除该对象么？',
 'Are you sure you want to uninstall application "%s"': '确定要删除应用程序 "%s"',
