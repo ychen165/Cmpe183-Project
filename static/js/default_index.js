@@ -69,6 +69,7 @@ var app = function () {
         var sent_major = self.vue.usr_major; //
         var sent_school = self.vue.usr_school; //
         var sent_experience = self.vue.usr_experience; //
+        var sent_email = self.vue.usr_email;
 
 
         $.post(add_usr_url,
@@ -78,6 +79,7 @@ var app = function () {
                 usr_major: self.vue.usr_major,
                 usr_school: self.vue.usr_school,
                 usr_experience: self.vue.usr_experience,
+                usr_email: self.vue.usr_email,
             },
             // What do we do when the post succeeds?
             function (data) {
@@ -95,6 +97,7 @@ var app = function () {
                     usr_major: sent_major,
                     usr_school: sent_school,
                     usr_experience: sent_experience,
+                    usr_email: sent_email,
                     can_edit: true, //Whether current user has permission to edit post.
                     editing: false  //Whether post is currently being edited.
                 };
@@ -153,7 +156,7 @@ var app = function () {
     };
 
     self.get_usr = function () {
-        page = 3;
+        self.vue.page = 3;
         $.getJSON(get_usr_list_url,
             function (data) {
                 // I am assuming here that the server gives me a nice list
@@ -165,6 +168,7 @@ var app = function () {
             }
         );
         console.log("I fired the get");
+
     };
 
     self.process_posts = function () {
@@ -437,6 +441,7 @@ var app = function () {
             usr_major:"",
             usr_school:"",
             usr_experience:"",
+            usr_email: "",
             post_list: [],
             usr_list: [],
             page: 0,
@@ -471,6 +476,7 @@ var app = function () {
             add_usr: self.add_usr,
             edit_usr: self.edit_usr,
             toggle_usrform: self.toggle_usrform,
+            get_usr: self.get_usr,
 
         }
 
@@ -491,7 +497,6 @@ var app = function () {
 
     // Gets the posts.
     self.get_posts();
-    self.get_usr();
 
     //Get thumb entries for current user session
     self.get_thumb_entries();

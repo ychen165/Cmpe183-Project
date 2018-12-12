@@ -17,9 +17,10 @@ def add_usr():
         usr_major=request.vars.usr_major,
         usr_school=request.vars.usr_school,
         usr_experience=request.vars.usr_experience,
+        usr_email = request.vars.usr_email,
     )
     # We return the id of the new post, so we can insert it along all the others.
-    return response.json(dict(usr_email=auth.user.email))
+    return response.json(dict(usr_id=usr_id,usr_email=auth.user.email))
 
 @auth.requires_signature()
 def edit_post():
@@ -40,6 +41,28 @@ def edit_post():
 #                                          )
 #     # Return id of the thumb entry
 #     return response.json(dict(thumb_id=thumb_id))
+
+def get_usr_list():
+    results = []
+
+    rows = db().select(db.usr.ALL)
+    for row in rows:
+        # editing = False
+        # can_edit = False
+        # if auth.user is not None:
+
+        results.append(dict(
+                # id=row.id,
+                usr_name=row.usr_name,
+                usr_school=row.usr_school,
+                usr_major=row.usr_major,
+                usr_experience=row.usr_experience,
+                usr_email=row.usr_email,
+        ))
+
+    return response.json(dict(usr_list=results))
+
+
 
 
 def get_post_list():
@@ -90,6 +113,9 @@ def get_post_list():
     #         ))
     # For homogeneity, we always return a dictionary.
     return response.json(dict(post_list=results))
+
+
+
 
 @auth.requires_signature()
 def delete_post():
