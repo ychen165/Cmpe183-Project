@@ -1,0 +1,157 @@
+/* line 1, ../sass/_main.scss */
+.colorful {
+  color: #bb8833;
+}
+
+/* line 5, ../sass/_main.scss */
+div.main_content {
+  padding: 16px;
+}
+/* line 8, ../sass/_main.scss */
+div.main_content div.form_row {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+/* line 14, ../sass/_main.scss */
+div.main_content div.post_div {
+  margin: 30px;
+  border: 1px black solid;
+  background-color: #eeeeee;
+  padding: 4px;
+}
+/* line 19, ../sass/_main.scss */
+div.main_content div.post_div .post_title {
+  font-size: 120%;
+}
+/* line 26, ../sass/_main.scss */
+div.main_content div.reply {
+  padding: 4px;
+  border: small solid black;
+  background-color: #FFFF00;
+}
+/* line 32, ../sass/_main.scss */
+div.main_content i.novel {
+  color: #58C5E4;
+}
+/* line 36, ../sass/_main.scss */
+div.main_content div.entry {
+  padding: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+  border: 1px black solid;
+}
+/* line 43, ../sass/_main.scss */
+div.main_content div.post_buttons {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 20px;
+}
+/* line 49, ../sass/_main.scss */
+div.main_content div.reply_area {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 20px;
+}
+/* line 54, ../sass/_main.scss */
+div.main_content div.reply {
+  margin-bottom: 20px;
+}
+
+/* line 59, ../sass/_main.scss */
+.nav-logo {
+  font-family: SourceHanSansSC-Bold;
+  font-size: 32px;
+  color: #58C5E4;
+  letter-spacing: 2px;
+  padding-left: 3%;
+}
+
+/* line 67, ../sass/_main.scss */
+.nav-logo-sub {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 17px;
+  color: #707070;
+  letter-spacing: 1.31px;
+}
+
+/* line 75, ../sass/_main.scss */
+.nav-button {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 18px;
+  color: #707070;
+  letter-spacing: 1.38px;
+  padding-right: 30px;
+}
+
+/* line 83, ../sass/_main.scss */
+.nav-login {
+  border: 2px solid #58C5E4;
+  border-radius: 18px;
+  height: 50px;
+  width: 110px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 93, ../sass/_main.scss */
+.nav-login-text {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 16px;
+  color: #707070;
+  letter-spacing: 1.38px;
+}
+
+/* line 101, ../sass/_main.scss */
+.nav-div {
+  float: right;
+  padding-top: 1%;
+}
+
+.bgimg {
+  background-color: #58C5E4;
+  background-image: url('https://i.graphicmama.com/blog/wp-content/uploads/2018/06/18081138/Flat-Design-Character-business-woman.gif');
+  margin: -16px;
+  padding: 0px;
+  widows: 100%;
+  height: auto;
+}
+
+.robot {
+  background-image: url('../images/robot.png');
+}
+
+.card {
+  width: 28rem; 
+  height:38rem;
+}
+
+.card-body {
+  padding-top:165px;
+}
+
+.card-title {
+  zoom: 1.5;
+}
+
+.card-text {
+  zoom: 1.4;
+}
+
+.card-explore {
+  zoom: 1.7
+}
+
+.card-poster {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 15px;
+  color: gray;
+}
+
+.form-hint {
+  font-family: SourceHanSansSC-Regular;
+  font-size: 18px;
+  color: #444;
+  padding-bottom: 5px;
+  padding-top: 8px;
+}
+

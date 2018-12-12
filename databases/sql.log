@@ -1,0 +1,197 @@
+timestamp: 2018-11-03T17:28:27.303686
+CREATE TABLE "web2py_session_hw_3"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
+timestamp: 2018-11-03T17:28:27.312697
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2018-11-03T17:28:27.318446
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2018-11-03T17:28:27.321476
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2018-11-03T17:28:27.324815
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2018-11-03T17:28:27.329416
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2018-11-03T17:28:27.334012
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2018-11-03T17:28:27.339560
+CREATE TABLE "post"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post_author" CHAR(512),
+    "post_title" CHAR(512),
+    "post_content" TEXT,
+    "post_time" TIMESTAMP
+);
+success!
+timestamp: 2018-11-03T17:28:27.344427
+CREATE TABLE "thumb"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "post_id" INTEGER REFERENCES "post" ("id") ON DELETE CASCADE  ,
+    "thumb_state" CHAR(512)
+);
+success!
+timestamp: 2018-11-09T18:52:57.447193
+CREATE TABLE "web2py_session_hw3"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
+timestamp: 2018-11-11T16:08:45.471800
+CREATE TABLE "web2py_session_hw4"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
+timestamp: 2018-11-12T15:30:29.910595
+CREATE TABLE "reply"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post_id" INTEGER REFERENCES "post" ("id") ON DELETE CASCADE  ,
+    "reply_author" CHAR(512),
+    "reply_content" TEXT,
+    "reply_time" TIMESTAMP
+);
+success!
+timestamp: 2018-11-28T14:11:20.564376
+CREATE TABLE "web2py_session_hw4s1"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
+timestamp: 2018-12-04T14:38:39.004736
+CREATE TABLE "web2py_session_startup"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "locked" CHAR(1),
+    "client_ip" CHAR(64),
+    "created_datetime" TIMESTAMP,
+    "modified_datetime" TIMESTAMP,
+    "unique_key" CHAR(64),
+    "session_data" BLOB
+);
+success!
+timestamp: 2018-12-04T14:54:03.098078
+CREATE TABLE "systemuser"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "user_name" TEXT,
+    "user_major" TEXT,
+    "user_school" TEXT,
+    "user_experience" TEXT
+);
+success!
+timestamp: 2018-12-04T14:54:37.013881
+CREATE TABLE "usr"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "usr_email" CHAR(512),
+    "usr_name" TEXT,
+    "usr_major" TEXT,
+    "usr_school" TEXT,
+    "usr_experience" TEXT
+);
+success!
+timestamp: 2018-12-04T15:06:33.856641
+CREATE TABLE "prj"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "owner_email" CHAR(512),
+    "prj_id" CHAR(512),
+    "prj_title" TEXT,
+    "prj_posttime" TIMESTAMP,
+    "prj_description" TEXT,
+    "prj_idea" TEXT,
+    "prj_plan" TEXT,
+    "pri_requirement" TEXT,
+    "prj_status" CHAR(512),
+    "prj_field" CHAR(512),
+    "prj_image" CHAR(512)
+);
+success!
+timestamp: 2018-12-04T15:18:28.618410
+ALTER TABLE "post" ADD "project_id" CHAR(512);
+success!
+timestamp: 2018-12-04T15:18:28.634042
+CREATE TABLE "project"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "owner_email" CHAR(512),
+    "project_id" CHAR(512),
+    "project_title" TEXT,
+    "project_posttime" TIMESTAMP,
+    "project_description" TEXT,
+    "project_idea" TEXT,
+    "project_plan" TEXT,
+    "project_requirement" TEXT,
+    "project_status" CHAR(512),
+    "project_field" CHAR(512),
+    "project_image" CHAR(512)
+);
+success!
+timestamp: 2018-12-12T17:16:27.699000
+ALTER TABLE "post" ADD "post_image" TEXT;
+success!
+timestamp: 2018-12-12T17:37:31.361000
+ALTER TABLE "usr" ADD "usr_portrait" TEXT;
+success!
