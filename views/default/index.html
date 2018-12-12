@@ -28,10 +28,10 @@
 
     var delete_post_url ="{{=URL('api', 'delete_post', user_signature=True)}}";
 
-    var user_email = "{{='' if auth.user is None else auth.user.email}}"; 
+    var user_email = "{{='' if auth.user is None else auth.user.email}}";
 
     var add_usr_url = "{{=URL('api', 'add_usr', user_signature=True)}}";
-    var get_usr_list_url = "{{=URL('api', 'get_usr_list')}}";
+    var get_usr_url = "{{=URL('api', 'get_user', user_signature=True)}}";
     // Like callbacks.
 
 </script>
@@ -46,10 +46,10 @@
     <div v-if="page === 0">
       <div class="bgimg" style="height:1000px;">
           <h2 style="color:white;  zoom: 2.2; font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 15%;">
-          Turn sparks into flames 
+          Turn sparks into flames
           </h3>
           <h7 style="color:white;  zoom: 2;font-family: SourceHanSansSC-Bold; padding-left: 10%; padding-top: 60%;">
-          Try out the most trending platform in 2019 for students to change the world ! 
+          Try out the most trending platform in 2019 for students to change the world !
           </h7>
           <h7 style="color:white; font-family: SourceHanSansSC-Bold; padding-left: 30%; ">
           </h7>
@@ -99,44 +99,29 @@
     <div v-if="page === 2">
       <div>
         <button class="btn btn-primary" style="background-color:#58C5E4; border-color:#58C5E4; zoom:1.5"  v-on:click="page=1">Home</button>
-        <div style="padding-left: 10%; width: 95%;">
+       <div style="padding-left: 10%; width: 95%;">
           <h2 style="color:#333;  zoom: 2; font-family: SourceHanSansSC-Bold; padding-top: 10%;">
-          Turn sparks into flames 
-          <span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary">Trending</span></h2>
-          <h7 style="color:#666;  zoom: 2;font-family: SourceHanSansSC-Bold;padding-top: 60%;">
-          An infinitely expandable magnetic building system designed for 2D and 3D creations. Let your creative side out to play.
-          </h7>
+          ${detail.post_title}
+          <span style="font-family: SourceHanSansSC-Bold;" class="badge badge-secondary">${detail.post_author}</span></h2>
         </div>
         <div class="row">
-          <div style="padding-left:10%; padding-top:80px">
-            <img src="https://ksr-ugc.imgix.net/assets/023/029/858/cfe3b1594edb17e846b4db3e58f0b1b9_original.gif?ixlib=rb-1.1.0&w=680&fit=max&v=1540508086&auto=format&gif-q=50&q=92&s=b0619e702cacfbaab3c27e113549905f" alt="Card image cap"/>
-          </div>
-          <div style="padding-left:10%; padding-top:30px;">
-            <span class="form-hint" style="color:#58C5E4">Zeyun Huang <br/>  An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick </span>
+          <div style="padding-left:10%; padding-top:80px;margin: auto">
+            <img v-bind:src="detail.post_image"  v-if="detail.post_image" alt="Card image cap"/>
           </div>
         </div>
-
         <hr style="margin:50px 10%;">
-
-        <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Bold;text-align: center"> Idea </center>
-        
+        <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Bold;text-align: center"> Description </center>
         <div  style="margin:0 10%;">
-            <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">PIXL™ is a magnetic building system that allows you to create almost anything you can think up, in either 2D or 3D. </center>
+            <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">${detail.post_content}</center>
         </div>
-
         <hr style="margin:50px 10%;">
-
-        <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Bold; text-align: center"> Plan </center>
-        
-        <div  style="margin:0 10%;">
-            <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">The PIXL™ community is growing every single day, and you can help grow it even more! Hit one of the buttons below and tag a friend or coworker who would build something #PIXLperfect with PIXL™.</center>
+        <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Bold; text-align: center"> Replies </center>
+        <div  style="margin:0 10%;" v-for="replay in detail._replies">
+            <center style="color:#444; zoom: 2;font-family: SourceHanSansSC-Regular;padding-top: 22px;text-align: center">${replay}</center>
         </div>
-
         <div class="form-hint" style="margin:100px 10%; font-size:15px; color:#999">
             End of the article
         </div>
-        
-
       </div>
     </div>
 <!-- End of Page2 -->
@@ -152,12 +137,13 @@
       class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"
       ></textarea>
 
-      <label class="form-hint">Image url</label>
-      <textarea type="text" id="lname" name="lastname" placeholder="Enter image Url" class="md-textarea form-control" rows="1" style="border-color:#58C5E4;font-size:14px"></textarea>
+      <label class="form-hint">Image</label>
+            <input type="file"  @change="on_file_change"  placeholder="Enter image Url" class="md-textarea form-control"
+                   rows="1" style="border-color:#58C5E4;font-size:14px;padding: 0;"/>
 
 
       <label class="form-hint">Description</label>
-      <textarea type="text" v-model="form_content" id="lname" name="lastname" placeholder="Enter idea description" class="md-textarea form-control" 
+      <textarea type="text" v-model="form_content" id="lname" name="lastname" placeholder="Enter idea description" class="md-textarea form-control"
       style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
       <div style="padding-top:12px;">
       <button id="add-post" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" v-on:click="add_post">Submit</button>
@@ -188,18 +174,16 @@
 
       <div id="post_list" style="padding-top:5%">
         <div class="card-deck" style="padding-left:10%">
+            <!--${post_list}-->
         <div class="d-inline" v-for="post in post_list" style="padding-right:50px; padding-bottom:100px">
-    
             <div class="card" style="width: 28rem; height:42rem;">
-            <img class="card-img-top" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/065e3217174739.562b6c9c486a0.png" alt="Card image cap"/>
+            <img class="card-img-top" v-bind:src="post.post_image" style="max-width: 20em;max-height: 20em;margin: 0 auto auto;"/>
             <div class="card-body" style="padding-top:165px;">
               <h5 class="card-title" style="zoom: 1.5; ">${post.post_title}</h5>
               <p class="card-text" style=" zoom: 1.4;">${post.post_content}</p>
             <span class="card-poster">By: ${post.post_author}<br/><br/></span>
-            <a href="#" v-on:click="page=2" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
-            
+            <a href="#" v-on:click="go_detail(post._idx)" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" class="btn btn-primary">Explore</a>
               <span v-if="user_email === post.post_author" class="fa fa-trash-o" v-on:click="delete_post(post._idx)"> </span>
-              
             </div>
             </div>
 
@@ -218,20 +202,24 @@
 
       <div v-if="usrediting === 0">
 
-      <div id="usr_profile" style="padding-top:5%">
-
-      <div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">
+      <div id="usr_profile" style="padding-top:5%;margin: auto;text-align: center">
+      <!--<div class="d-inline" v-for="usr in usr_list" style="padding-right:50px; padding-bottom:100px">-->
          <!-- <div v-if="user_email === usr.usr_email">  -->
-            <div class="usr_profile" style="width: 28rem; height:42rem;">
-          <img class="usr_profile-img" src="https://us.123rf.com/450wm/tuktukdesign/tuktukdesign1606/tuktukdesign160600119/59070200-user-icon-man-profile-businessman-avatar-person-icon-in-vector-illustration.jpg" alt="profile image cap" style = "width: 5rem; height:7rem;"/> 
-            <div class="card-body" style="padding-top:165px;">
-              <div class="usr-name" style="zoom: 1.8; ">${usr.usr_name}</div>
-              <div class="usr-major" style=" zoom: 1.6;">${usr.usr_major}</div>
-              <div class="usr-school" style=" zoom: 1.6;">${usr.usr_school}</div>
-               <div class="usr-email" style=" zoom: 1.6;">${usr.usr_email}</div> 
-              <div class="usr-experience" style=" zoom: 1.4;">${usr.usr_experience}</div>
+            <!--<div class="usr_profile" style="width: 28rem; height:42rem;">-->
+          <img class="usr_profile-img" v-bind:src="usr.usr_portrait" v-if="usr.usr_portrait" alt="profile image cap" style = "max-width: 5rem; max-height:7rem;"/>
+            <div class="card-body">
+              <div class="usr-name" style="zoom: 1.8; " v-if="usr.first_name">FirstName: ${usr.first_name}</div>
+                <div class="usr-major" style=" zoom: 1.6;" v-if="usr.last_name">LastName: ${usr.last_name}</div>
+                <div class="usr-major" style=" zoom: 1.6;" v-if="usr.usr_name">UserName: ${usr.usr_name}</div>
+                <div class="usr-school" v-if="usr.email" style=" zoom: 1.6;">Email: ${usr.email}</div>
+                <div class="usr-email" v-if="usr.usr_email" style=" zoom: 1.6;">Email:${usr.usr_email}</div>
+                <div class="usr-experience" v-if="usr.usr_experience" style=" zoom: 1.4;">
+                    Experience: ${usr.usr_experience}
+                </div>
+                <div class="usr-email" v-if="usr.usr_school" style=" zoom: 1.6;">School:${usr.usr_school}</div>
+                <div class="usr-email" v-if="usr.usr_major" style=" zoom: 1.6;">Email:${usr.usr_major}</div>
         <!-- </div> -->
-        </div>
+        <!--</div>-->
         </div>
         </div>
           </div>
@@ -244,6 +232,9 @@
       <div v-if="usrediting === 1">
       <div id="edit_profile">
         <div style="padding-left:10%; width:90%" >
+        <label class="form-hint">Profile:</label>
+        <input type="file"  @change="on_profile_change" v-model="form_image"  placeholder="Enter image Url" class="md-textarea form-control"
+                   rows="1" style="border-color:#58C5E4;font-size:14px;padding: 0;"/>
 
       <label class="form-hint">Name</label>
       <textarea type="text" v-model="usr_name" placeholder="Enter your name"
@@ -255,36 +246,26 @@
 
 
       <label class="form-hint">School</label>
-      <textarea type="text" v-model="usr_school" id="lname" name="lastname" placeholder="Enter your school" class="md-textarea form-control" 
+      <textarea type="text" v-model="usr_school" id="lname" name="lastname" placeholder="Enter your school" class="md-textarea form-control"
       style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
-      
+
       <label class="form-hint">Experience</label>
-      <textarea type="text" v-model="usr_experience" id="lname" name="lastname" placeholder="Enter your experience" class="md-textarea form-control" 
+      <textarea type="text" v-model="usr_experience" id="lname" name="lastname" placeholder="Enter your experience" class="md-textarea form-control"
       style="border-color:#58C5E4;font-size:14px; height:100px"></textarea>
 
       <div style="padding-top:12px;">
       <button id="add-post" style=" zoom: 1.7; background-color:#58C5E4; border-color:#58C5E4;" v-on:click="add_usr">Submit</button>
       </div>
       </div>
-        
+
       </div>
       </div>
     </div>
         <!-- end of page1 -->
-
-
-
-
-
-
       </div>
       </div>
 
       </div>
-
-
-    
-      
     </div>
 </div>
 

@@ -20,19 +20,42 @@ var app = function () {
         });
     };
 
+    self.on_file_change = function (e) {
+        // self.vue.form_image = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function (o) {
+            // do something with the data result
+            var dataURL = o.target.result;
+            console.log(o);
+            self.vue.form_image = dataURL;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+
+    self.on_profile_change = function (e) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            // do something with the data result
+            var dataURL = e.target.result;
+            console.log(e);
+            self.vue.usr_portrait = dataURL;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
 
     self.add_post = function () {
+        if (self.vue.form_image.length === 0) {
+            alert("choose the image plz!");
+            return;
+        }
         // We disable the button, to prevent double submission.
         $.web2py.disableElement($("#add-post"));
-        var sent_title = self.vue.form_title; // Makes a copy 
-        var sent_content = self.vue.form_content; //
-
         $.post(add_post_url,
             // Data we are sending.
             {
                 post_title: self.vue.form_title,
-                post_content: self.vue.form_content
-
+                post_content: self.vue.form_content,
+                post_image: self.vue.form_image
             },
             // What do we do when the post succeeds?
             function (data) {
@@ -41,37 +64,20 @@ var app = function () {
                 // Clears the form.
                 self.vue.form_title = "";
                 self.vue.form_content = "";
-                // Adds the post to the list of posts. 
-                var new_post = {
-                    id: data.post_id,
-                    post_title: sent_title,
-                    post_content: sent_content,
-                    post_author: user_email,
-                    // data.post_author,
-                    // can_edit: true, //W hether current user has permission to edit post.
-                    // editing: false  //Whether post is currently being edited.
-                };
-                self.vue.post_list.unshift(new_post); //Add new post to front of post_list.
-                // We re-enumerate the array.
-                self.process_posts();
+                self.vue.form_image = "";
+                self.get_posts();
+                alert("add success");
+                self.vue.form_set = !self.vue.form_set;
+                // If you put code here, it is run BEFORE the call comes back.
             }
         );
-        // If you put code here, it is run BEFORE the call comes back.
-        self.vue.form_set = !self.vue.form_set;
+
     };
 
-    
 
     self.add_usr = function () {
         // We disable the button, to prevent double submission.
         $.web2py.disableElement($("#add-user"));
-        var sent_name = self.vue.usr_name; // Makes a copy 
-        var sent_major = self.vue.usr_major; //
-        var sent_school = self.vue.usr_school; //
-        var sent_experience = self.vue.usr_experience; //
-        var sent_email = self.vue.usr_email;
-
-
         $.post(add_usr_url,
             // Data we are sending.
             {
@@ -80,63 +86,49 @@ var app = function () {
                 usr_school: self.vue.usr_school,
                 usr_experience: self.vue.usr_experience,
                 usr_email: self.vue.usr_email,
+                usr_portrait: self.vue.usr_portrait
             },
             // What do we do when the post succeeds?
             function (data) {
-                // Re-enable the button.
-                $.web2py.enableElement($("#add-user"));
-                // Clears the form.
-                self.vue.usr_name = "";
-                self.vue.usr_major = "";
-                self.vue.usr_school = "";
-                self.vue.usr_experience = "";
-                // Adds the post to the list of posts. 
-                var new_usr = {
-                    id: data.usr_email,
-                    usr_name: sent_name,
-                    usr_major: sent_major,
-                    usr_school: sent_school,
-                    usr_experience: sent_experience,
-                    usr_email: sent_email,
-                    can_edit: true, //Whether current user has permission to edit post.
-                    editing: false  //Whether post is currently being edited.
-                };
-                self.vue.usr_list.unshift(new_usr); //Add new post to front of post_list.
-                // We re-enumerate the array.
+                var sent_name = self.vue.usr_name; // Makes a copy
+                self.vue.usr_major = ""; //
+                self.vue.usr_school = ""; //
+                self.vue.usr_experience = ""; //
+                self.vue.usr_email = "";
+                self.vue.usr_portrait = "";
                 self.vue.usrediting = 0;
-                self.process_usr();
                 self.get_usr();
             }
         );
-        
+
 
     };
 
 
     //My function to add replies. Inspired by the provided add_post function.
-    self.add_reply = function(post_idx){
+    self.add_reply = function (post_idx) {
         var p = self.vue.post_list[post_idx];
 
         reply_content = p._cur_reply;
         $.post(add_reply_url,
-        // Data we are sending.
-        {
-            post_id: p.id,
-            reply_content: reply_content
-        },
-        // What do we do when the post succeeds?
-        function (data) {
-            p._cur_reply = "";
-            var new_reply = {
-                id: data.reply_id,
-                reply_content: data.reply_content,
-                reply_author: data.author,
-                editing: false //Whether the reply is currently being edited.
-            };
+            // Data we are sending.
+            {
+                post_id: p.id,
+                reply_content: reply_content
+            },
+            // What do we do when the post succeeds?
+            function (data) {
+                p._cur_reply = "";
+                var new_reply = {
+                    id: data.reply_id,
+                    reply_content: data.reply_content,
+                    reply_author: data.author,
+                    editing: false //Whether the reply is currently being edited.
+                };
 
-            p._replies.push(new_reply); //Add reply to end of reply list of the associated post.
+                p._replies.push(new_reply); //Add reply to end of reply list of the associated post.
 
-        });
+            });
         p._add_reply = false;
     };
 
@@ -157,13 +149,14 @@ var app = function () {
 
     self.get_usr = function () {
         self.vue.page = 3;
-        $.getJSON(get_usr_list_url,
+        $.getJSON(get_usr_url,
             function (data) {
                 // I am assuming here that the server gives me a nice list
                 // of posts, all ready for display.
-                self.vue.usr_list = data.usr_list;
+                self.vue.usr = data.user;
                 // Post-processing.
-                self.process_usr();
+                console.log(self.vue.usr);
+                // self.process_usr();
                 console.log("I got my usr profile");
             }
         );
@@ -195,7 +188,7 @@ var app = function () {
         });
     };
 
-     self.process_usr = function () {
+    self.process_usr = function () {
         // This function is used to post-process posts, after the list has been modified
         // or after we have gotten new posts. 
         // We add the _idx attribute to the posts. 
@@ -337,49 +330,49 @@ var app = function () {
 
     //Toggle a post's edit button (between edit and submit).
     //When toggling from submit to edit, send the updated post content to the db.
-    self.toggle_edit = function(post_idx){
-      var p = self.vue.post_list[post_idx];
-      console.log(p.can_edit);
-      if(p.can_edit){
-          if(p.editing){
-              //Modify the post's content
-            $.post(edit_post_url, {
-                post_id: p.id,
-                new_content: p.post_content
-            });
+    self.toggle_edit = function (post_idx) {
+        var p = self.vue.post_list[post_idx];
+        console.log(p.can_edit);
+        if (p.can_edit) {
+            if (p.editing) {
+                //Modify the post's content
+                $.post(edit_post_url, {
+                    post_id: p.id,
+                    new_content: p.post_content
+                });
 
-          }
-          p.editing = !p.editing;
-      }
+            }
+            p.editing = !p.editing;
+        }
     };
 
 
-    self.show_replies = function(post_idx){
+    self.show_replies = function (post_idx) {
         var p = self.vue.post_list[post_idx];
         //Get all replies associated with p.id
-        if(!p._show_replies){
+        if (!p._show_replies) {
             $.getJSON(get_replies_url,
-            // Data we are sending.
-            {
-                post_id: p.id
-            },
-            // What do we do when the post succeeds?
-            function (data) {
-                p._replies = data.reply_list;
-            });
+                // Data we are sending.
+                {
+                    post_id: p.id
+                },
+                // What do we do when the post succeeds?
+                function (data) {
+                    p._replies = data.reply_list;
+                });
         }
         console.log(p._replies);
         p._show_replies = true;
     };
 
 
-    self.hide_replies = function(post_idx){
+    self.hide_replies = function (post_idx) {
         var p = self.vue.post_list[post_idx];
         p._show_replies = false;
     };
 
 
-    self.toggle_add_reply = function(post_idx){
+    self.toggle_add_reply = function (post_idx) {
         var p = self.vue.post_list[post_idx];
 
         p._add_reply = !p._add_reply;
@@ -387,18 +380,18 @@ var app = function () {
     };
 
 
-    self.edit_reply = function(post_idx, reply_id){
+    self.edit_reply = function (post_idx, reply_id) {
         var p = self.vue.post_list[post_idx];
         var r_idx; //index of the reply with reply_id in p's reply list.
-        for(r_idx = 0; r_idx < p._replies.length; r_idx++){
-            if(p._replies[r_idx].id == reply_id){
+        for (r_idx = 0; r_idx < p._replies.length; r_idx++) {
+            if (p._replies[r_idx].id == reply_id) {
                 break;
             }
         }
 
         var r = p._replies[r_idx];
 
-        if(r.editing) {
+        if (r.editing) {
             r.editing = false;
             console.log("reply idx");
             console.log(r_idx);
@@ -408,23 +401,29 @@ var app = function () {
                 new_content: r.reply_content
             });
         }
-        else{
+        else {
             r.editing = true;
         }
 
         p._replies[r_idx] = r;
     };
 
-    self.delete_post = function(post_idx) {
+    self.delete_post = function (post_idx) {
         var p = self.vue.post_list[post_idx];
         $.post(delete_post_url, {
-            post_id: p.id,
-        },
-        function(data) {
-            self.vue.post_list.splice(post_idx, 1);
-        }
+                post_id: p.id,
+            },
+            function (data) {
+                self.vue.post_list.splice(post_idx, 1);
+            }
+        );
+    };
 
-    );
+    //Show detail
+    self.go_detail = function (post_idx) {
+        self.vue.page = 2;
+        self.vue.detail = self.vue.post_list[post_idx];
+        console.log(post_idx)
     }
 
     // Complete as needed.
@@ -437,21 +436,20 @@ var app = function () {
             add_btn_show: false, //Boolean for displaying add post button
             form_title: "",
             form_content: "",
-            usr_name:"",
-            usr_major:"",
-            usr_school:"",
-            usr_experience:"",
+            form_image: "",
+            usr_name: "",
+            usr_major: "",
+            usr_school: "",
+            usr_experience: "",
             usr_email: "",
+            usr_portrait: "",
             post_list: [],
-            usr_list: [],
+            usr: [],
             page: 0,
-
             user_email: user_email,
-
-            usrediting:0,
-
-            thumb_entries: [] //List to which get_thumb_entries writes to.
-
+            usrediting: 0,
+            thumb_entries: [], //List to which get_thumb_entries writes to.,
+            detail: {}//Page 2 detail info
         },
         methods: {
             add_post: self.add_post,
@@ -470,13 +468,14 @@ var app = function () {
             toggle_add_reply: self.toggle_add_reply,
             add_reply: self.add_reply,
             edit_reply: self.edit_reply,
-
             delete_post: self.delete_post,
-
             add_usr: self.add_usr,
             edit_usr: self.edit_usr,
             toggle_usrform: self.toggle_usrform,
             get_usr: self.get_usr,
+            go_detail: self.go_detail,
+            on_file_change: self.on_file_change,
+            on_profile_change: self.on_profile_change
 
         }
 
@@ -499,7 +498,7 @@ var app = function () {
     self.get_posts();
 
     //Get thumb entries for current user session
-    self.get_thumb_entries();
+    // self.get_thumb_entries();
 
     return self;
 };

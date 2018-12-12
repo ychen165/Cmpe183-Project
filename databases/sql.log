@@ -189,3 +189,9 @@ CREATE TABLE "project"(
     "project_image" CHAR(512)
 );
 success!
+timestamp: 2018-12-12T17:16:27.699000
+ALTER TABLE "post" ADD "post_image" TEXT;
+success!
+timestamp: 2018-12-12T17:37:31.361000
+ALTER TABLE "usr" ADD "usr_portrait" TEXT;
+success!

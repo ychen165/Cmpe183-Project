@@ -6,28 +6,55 @@ def add_post():
     post_id = db.post.insert(
         post_title=request.vars.post_title,
         post_content=request.vars.post_content,
+        post_image=request.vars.post_image
     )
     # We return the id of the new post, so we can insert it along all the others.
     return response.json(dict(post_id=post_id, post_author=auth.user.email))
 
+
 @auth.requires_signature()
 def add_usr():
-    usr_id = db.usr.insert(
-        usr_name=request.vars.usr_name,
-        usr_major=request.vars.usr_major,
-        usr_school=request.vars.usr_school,
-        usr_experience=request.vars.usr_experience,
-        usr_email = request.vars.usr_email,
-    )
-    # We return the id of the new post, so we can insert it along all the others.
-    return response.json(dict(usr_id=usr_id,usr_email=auth.user.email))
+    user = db(db.usr.usr_email == auth.user.email).select()
+    if len(user) <= 0:
+        usr_id = db.usr.insert(
+            usr_name=request.vars.usr_name,
+            usr_major=request.vars.usr_major,
+            usr_school=request.vars.usr_school,
+            usr_experience=request.vars.usr_experience,
+            usr_email=auth.user.email,
+            usr_portrait=request.vars.usr_profile
+        )
+        # We return the id of the new post, so we can insert it along all the others.
+        return response.json(dict(usr_id=usr_id, usr_email=auth.user.email))
+    else:
+        db(db.usr.usr_email == auth.user.email).update(
+            usr_name=request.vars.usr_name,
+            usr_major=request.vars.usr_major,
+            usr_school=request.vars.usr_school,
+            usr_experience=request.vars.usr_experience,
+            usr_email=auth.user.email,
+            usr_portrait=request.vars.usr_portrait
+        )
+        return "success"
+
 
 @auth.requires_signature()
 def edit_post():
-    #Simply updates content of post associated with post_id.
+    # Simply updates content of post associated with post_id.
     post_id = int(request.vars.post_id)
     content = request.vars.new_content
     db(db.post.id == post_id).update(post_content=content)
+
+
+@auth.requires_signature()
+def get_user():
+    print(auth)
+    user = db(db.usr.usr_email == auth.user.email).select()
+    if len(user) <= 0:
+        return response.json(dict(user=auth.user))
+    else:
+        return response.json(dict(user=user[0]))
+
 
 # @auth.requires_signature()
 # def set_thumb():
@@ -52,17 +79,15 @@ def get_usr_list():
         # if auth.user is not None:
 
         results.append(dict(
-                # id=row.id,
-                usr_name=row.usr_name,
-                usr_school=row.usr_school,
-                usr_major=row.usr_major,
-                usr_experience=row.usr_experience,
-                usr_email=row.usr_email,
+            # id=row.id,
+            usr_name=row.usr_name,
+            usr_school=row.usr_school,
+            usr_major=row.usr_major,
+            usr_experience=row.usr_experience,
+            usr_email=row.usr_email,
         ))
 
     return response.json(dict(usr_list=results))
-
-
 
 
 def get_post_list():
@@ -73,12 +98,12 @@ def get_post_list():
         # editing = False
         # can_edit = False
         # if auth.user is not None:
-
         results.append(dict(
-                id=row.id,
-                post_title=row.post_title,
-                post_content=row.post_content,
-                post_author=row.post_author,
+            id=row.id,
+            post_title=row.post_title,
+            post_content=row.post_content,
+            post_author=row.post_author,
+            post_image=row.post_image
         ))
 
     # if auth.user is None:
@@ -112,9 +137,8 @@ def get_post_list():
     #             can_edit = row.post.post_author == auth.user.email
     #         ))
     # For homogeneity, we always return a dictionary.
+    # print(results)
     return response.json(dict(post_list=results))
-
-
 
 
 @auth.requires_signature()
@@ -123,10 +147,11 @@ def delete_post():
     r = db.post(post_id)
     if r is not None:
         if r.post_author != auth.user.email:
-            raise(HTTP(403, "Not authorized"))
+            raise (HTTP(403, "Not authorized"))
 
         r.delete_record()
     return "ok"
+
 
 # def get_thumb_count():
 #     # Get sum of thumbs for specified post.
@@ -157,7 +182,7 @@ def delete_post():
 
 @auth.requires_signature()
 def edit_post():
-    #Simply updates content of post associated with post_id.
+    # Simply updates content of post associated with post_id.
     post_id = int(request.vars.post_id)
     content = request.vars.new_content
     db(db.post.id == post_id).update(post_content=content)
@@ -165,13 +190,13 @@ def edit_post():
 
 @auth.requires_signature()
 def add_reply():
-    #Add a reply to post associated with post_id.
+    # Add a reply to post associated with post_id.
     post_id = int(request.vars.post_id)
     reply_content = request.vars.reply_content
 
     reply_id = db.reply.insert(
-        post_id = post_id,
-        reply_content = reply_content
+        post_id=post_id,
+        reply_content=reply_content
 
     )
     # We return the id of the new post, so we can insert it along all the others.
@@ -179,7 +204,7 @@ def add_reply():
 
 
 def get_replies():
-    #Get all replies who's post_id equal the passed in post_id.
+    # Get all replies who's post_id equal the passed in post_id.
     results = []
     post_id = int(request.vars.post_id)
     rows = db(db.reply.post_id == post_id).select()
@@ -189,7 +214,7 @@ def get_replies():
             id=row.id,
             reply_content=row.reply_content,
             reply_author=row.reply_author,
-            editing = False
+            editing=False
         ))
 
     return response.json(dict(reply_list=results))
@@ -197,18 +222,7 @@ def get_replies():
 
 @auth.requires_signature()
 def edit_reply():
-    #Simply updates content of reply associated with reply_id.
+    # Simply updates content of reply associated with reply_id.
     reply_id = int(request.vars.reply_id)
     content = request.vars.new_content
     db(db.reply.id == reply_id).update(reply_content=content)
-
-
-
-
-
-
-
-
-
-
-
