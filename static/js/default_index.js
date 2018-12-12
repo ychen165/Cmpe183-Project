@@ -32,6 +32,7 @@ var app = function () {
             {
                 post_title: self.vue.form_title,
                 post_content: self.vue.form_content
+
             },
             // What do we do when the post succeeds?
             function (data) {
@@ -57,6 +58,55 @@ var app = function () {
         );
         // If you put code here, it is run BEFORE the call comes back.
         self.vue.form_set = !self.vue.form_set;
+    };
+
+
+
+    self.add_usr = function () {
+        // We disable the button, to prevent double submission.
+        $.web2py.disableElement($("#add-user"));
+        var sent_name = self.vue.usr_name; // Makes a copy 
+        var sent_major = self.vue.usr_major; //
+        var sent_school = self.vue.usr_school; //
+        var sent_experience = self.vue.usr_experience; //
+
+
+        $.post(add_usr_url,
+            // Data we are sending.
+            {
+                usr_name: self.vue.usr_name,
+                usr_major: self.vue.usr_major,
+                usr_school: self.vue.usr_school,
+                usr_experience: self.vue.usr_experience,
+            },
+            // What do we do when the post succeeds?
+            function (data) {
+                // Re-enable the button.
+                $.web2py.enableElement($("#add-user"));
+                // Clears the form.
+                self.vue.usr_name = "";
+                self.vue.usr_major = "";
+                self.vue.usr_school = "";
+                self.vue.usr_experience = "";
+                // Adds the post to the list of posts. 
+                var new_usr = {
+                    id: data.usr_email,
+                    usr_name: sent_name,
+                    usr_major: sent_major,
+                    usr_school: sent_school,
+                    usr_experience: sent_experience,
+                    can_edit: true, //Whether current user has permission to edit post.
+                    editing: false  //Whether post is currently being edited.
+                };
+                self.vue.usr_list.unshift(new_usr); //Add new post to front of post_list.
+                // We re-enumerate the array.
+                self.vue.usrediting = 0;
+                self.process_usr();
+                self.get_usr();
+            }
+        );
+        
+
     };
 
 
@@ -102,6 +152,21 @@ var app = function () {
         console.log("I fired the get");
     };
 
+    self.get_usr = function () {
+        page = 3;
+        $.getJSON(get_usr_list_url,
+            function (data) {
+                // I am assuming here that the server gives me a nice list
+                // of posts, all ready for display.
+                self.vue.usr_list = data.usr_list;
+                // Post-processing.
+                self.process_usr();
+                console.log("I got my usr profile");
+            }
+        );
+        console.log("I fired the get");
+    };
+
     self.process_posts = function () {
         // This function is used to post-process posts, after the list has been modified
         // or after we have gotten new posts. 
@@ -126,6 +191,29 @@ var app = function () {
         });
     };
 
+     self.process_usr = function () {
+        // This function is used to post-process posts, after the list has been modified
+        // or after we have gotten new posts. 
+        // We add the _idx attribute to the posts. 
+        enumerate(self.vue.usr_list);
+
+        // We initialize the smile status to match the like. 
+        self.vue.post_list.map(function (e) {
+            // I need to use Vue.set here, because I am adding a new watched attribute
+            // to an object.  See https://vuejs.org/v2/guide/list.html#Object-Change-Detection-Caveats
+            // The code below is commented out, as we don't have smiles any more. 
+            // Replace it with the appropriate code for thumbs. 
+            // // Did I like it? 
+            // // If I do e._smile = e.like, then Vue won't sehje the changes to e._smile .
+            // Vue.set(e, '_smile', e.like);
+            // Vue.set(e, '_thumb', e.thumb); //Post's real-time thumb status.
+            // Vue.set(e, '_show_replies', false); //Boolean for displaying the post's replies.
+            // Vue.set(e, '_add_reply', false); //Boolean for whether current user can add a reply.
+            // Vue.set(e, '_cur_reply', ""); //Text of new reply.
+            // Vue.set(e, '_replies', []); //List of the post's replies.
+
+        });
+    };
 
     //Toggle the new post form
     self.toggle_form = function () {
@@ -133,6 +221,9 @@ var app = function () {
         self.vue.form_set = !self.vue.form_set;
     };
 
+    self.toggle_usrform = function () {
+        self.vue.usrediting = 1;
+    };
 
     //Thumb up functions
     self.thumb_up_mouseover = function (post_idx) {
@@ -342,9 +433,18 @@ var app = function () {
             add_btn_show: false, //Boolean for displaying add post button
             form_title: "",
             form_content: "",
+            usr_name:"",
+            usr_major:"",
+            usr_school:"",
+            usr_experience:"",
             post_list: [],
+            usr_list: [],
             page: 0,
+<<<<<<< HEAD
             user_email: user_email,
+=======
+            usrediting:0,
+>>>>>>> 72cc0bb2709396ac020c771b81bc09662db66809
             thumb_entries: [] //List to which get_thumb_entries writes to.
 
         },
@@ -365,7 +465,13 @@ var app = function () {
             toggle_add_reply: self.toggle_add_reply,
             add_reply: self.add_reply,
             edit_reply: self.edit_reply,
+<<<<<<< HEAD
             delete_post: self.delete_post,
+=======
+            add_usr: self.add_usr,
+            edit_usr: self.edit_usr,
+            toggle_usrform: self.toggle_usrform,
+>>>>>>> 72cc0bb2709396ac020c771b81bc09662db66809
         }
 
 
@@ -385,6 +491,7 @@ var app = function () {
 
     // Gets the posts.
     self.get_posts();
+    self.get_usr();
 
     //Get thumb entries for current user session
     self.get_thumb_entries();

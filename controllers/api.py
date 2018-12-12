@@ -10,6 +10,23 @@ def add_post():
     # We return the id of the new post, so we can insert it along all the others.
     return response.json(dict(post_id=post_id, post_author=auth.user.email))
 
+@auth.requires_signature()
+def add_usr():
+    usr_id = db.usr.insert(
+        usr_name=request.vars.usr_name,
+        usr_major=request.vars.usr_major,
+        usr_school=request.vars.usr_school,
+        usr_experience=request.vars.usr_experience,
+    )
+    # We return the id of the new post, so we can insert it along all the others.
+    return response.json(dict(usr_email=auth.user.email))
+
+@auth.requires_signature()
+def edit_post():
+    #Simply updates content of post associated with post_id.
+    post_id = int(request.vars.post_id)
+    content = request.vars.new_content
+    db(db.post.id == post_id).update(post_content=content)
 
 # @auth.requires_signature()
 # def set_thumb():
