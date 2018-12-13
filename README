@@ -1,1 +1,26 @@
-test
+CMPS183 Final project
+Group member: Zeyun Huang (Front-end)
+			  Chin-shu Shao(Back-end)
+			  Yang Chen (Back-end)
+	We are using google cloud platform to host our website
+	URL: https://mysite-dot-startup-225011.appspot.com/startup/default/index#
+	
+	For the website, we have two types of users: 
+	1. students who want to find projects or investers who want to find interesting ideas
+	2. students who have ideas and want to recruite
+
+	Every registered user could have their own profile page and we leave it empty for new user for now since some users would not like to share their information and they can also uplaod their own profile image.
+
+	Users could easily add an idea, description for the idea and a demo image in the main page.
+
+	Users could also delete their posts.
+
+	When the user clicks the exlore button on each project, it will introduces the user to the project detail page. The user could also click on the project owner email as a button to browse the profile of the project owner and all the projects the project owner has.
+
+	There are Home button and Back button at the bottom of the profile page.
+
+	There is a small bug that if we switch different pages too frequent or too fast, there might be a synchronization problem with inconsistent information match we just found out today.
+
+	We found it was really difficult to work colaborately by using github since this is a single-page website (as TA said). When we are editing the same page of the project, there will arise many merge problems.
+
+	Although we have spent a lot of time the coherence problem and sync problem, we tried our best to make the UI easier and appealing for users to use and show their ideas. 
